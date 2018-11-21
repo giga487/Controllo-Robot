@@ -19,23 +19,74 @@ T02 = A01*A12;
 x = T02(1,4);
 y = T02(2,4);
 
-J1 = jacobian(x,[x1,x2])
-J2 = jacobian(y,[x1,x2])
+J1 = jacobian(x,[x1,x2]);
+J2 = jacobian(y,[x1,x2]);
 
 J = [J1;J2]
 
-%% SLIDE 38 di 101 05 Gabiccini
+%% 
+syms v1 v2 v3 theta1 theta2 theta3 d1 d2 d3 real
 
-syms theta psi phi
+T01 = [Rz_rad(theta1),[d1*c(theta1);d1*s(theta1);0];
+        0,0,0,1];
+T12 = [Rz_rad(theta2),[d2*c(theta2);d2*s(theta2);0];
+        0,0,0,1];
+T23 = [Rz_rad(theta3),[d3*c(theta3);d3*s(theta3);0];
+        0,0,0,1];
 
-A01 = Rz_rad(theta);
-A02 = Rx_rad(psi);
-A03 = Rz_rad(phi);
+T = T01*T12*T23;
 
-T = A01*A02*A03
+p = T(1:3,4);
+PSI = T(1:3,1:3);
 
-J1 =  jacobian(T(1,:),[theta,psi,phi])
-J2 =  jacobian(T(2,:),[theta,psi,phi])
+
+JacobianP = [jacobian(p(1),[theta1,theta2,theta3]);
+             jacobian(p(2),[theta1,theta2,theta3]);
+             jacobian(p(3),[theta1,theta2,theta3])];
+         
+JacobianP = simplify(JacobianP)
+
+dR_theta1 = diff(PSI,theta1);
+dR_theta2 = diff(PSI,theta2);
+dR_theta3 = diff(PSI,theta3);
+
+TOA1vee = simplify(dR_theta1*PSI');
+TOA2vee = simplify(dR_theta2*PSI');
+TOA3vee = simplify(dR_theta3*PSI');
+
+TOA1 = [TOA1vee(3,2);TOA1vee(1,3);TOA1vee(2,1)];
+TOA2 = [TOA2vee(3,2);TOA2vee(1,3);TOA2vee(2,1)];
+TOA3 = [TOA3vee(3,2);TOA3vee(1,3);TOA3vee(2,1)];
+
+% skew Matrix = [0 -wz wy;
+%                wz 0 -wx;
+%               -wy wx 0;];
+%l'operatore vee estrae le velocità angolari e le inserisce in modo
+%ordinato all'interno di un vettore w = [wx;wy;wz];
+
+JacobianO = [TOA1,TOA2,TOA3];
+
+Jacobiano = [JacobianP;JacobianO]  % OK si fa così.
+
+%% Esempio Euelero ZYZ
+syms phi theta psi real
+Rzyz = Rz_rad(phi)*Ry_rad(theta)*Rz_rad(psi);
+
+dR_phi = diff(Rzyz,phi)
+dR_theta = diff(Rzyz,theta)
+dR_psi = diff(Rzyz,psi)
+
+TOA1vee = simplify(dR_phi*Rzyz');
+TOA2vee = simplify(dR_theta*Rzyz');
+TOA3vee = simplify(dR_psi*Rzyz');
+
+TOA1 = [TOA1vee(3,2);TOA1vee(1,3);TOA1vee(2,1)];
+TOA2 = [TOA2vee(3,2);TOA2vee(1,3);TOA2vee(2,1)];
+TOA3 = [TOA3vee(3,2);TOA3vee(1,3);TOA3vee(2,1)];
+
+J = [TOA1,TOA2,TOA3] 
+
+%CI SONO RIUSCITO CAZZO
 
 
 
