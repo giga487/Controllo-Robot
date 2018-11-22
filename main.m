@@ -6,7 +6,7 @@ clc;
 
 addpath('utils');
 %% Esempio RR planare 2. Scemissimo.
-syms x1 x2 x3 L1 L2 L3
+syms x1 x2 x3 L1 L2 real
 
 A01 = [Rz_rad(x1),[L1*cos(x1);L1*sin(x1);0];
       0,0,0, 1];
@@ -16,14 +16,33 @@ A12 = [Rz_rad(x2),[L2*cos(x2);L2*sin(x2);0];
   
 T02 = A01*A12;
 
-x = T02(1,4);
-y = T02(2,4);
+p = T02(1:3,4);
+R = T02(1:3,1:3);
 
-J1 = jacobian(x,[x1,x2]);
-J2 = jacobian(y,[x1,x2]);
+JacobianP = simplify([jacobian(p(1),[x1,x2,x3]);
+             jacobian(p(2),[x1,x2,x3]);
+             jacobian(p(3),[x1,x2,x3])]);
+         
+        
+dR_x1 = diff(R,x1);
+dR_x2 = diff(R,x2);
+dR_x3 = diff(R,x3);
 
-J = [J1;J2]
+TOR1vee = simplify(dR_x1*R');
+TOR2vee = simplify(dR_x2*R');
+TOR3vee = simplify(dR_x3*R');
 
+TOR1 = [TOR1vee(3,2);TOR1vee(1,3);TOR1vee(2,1)];
+TOR2 = [TOR2vee(3,2);TOR2vee(1,3);TOR2vee(2,1)];
+TOR3 = [TOR3vee(3,2);TOR3vee(1,3);TOR3vee(2,1)];
+
+
+JacobianO = [TOR1,TOR2,TOR3];
+
+Jacobian = [JacobianP;JacobianO]
+
+
+         
 %% 
 syms v1 v2 v3 theta1 theta2 theta3 d1 d2 d3 real
 
