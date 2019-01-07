@@ -5,6 +5,21 @@ close all;
 clc;
 
 addpath('utils');
+
+syms d theta a alfa real
+
+T_DH_d =   [eye(3),[0;0;d];
+          [0,0,0],1];
+T_DH_theta = [Rz_rad(theta),[0;0;0];
+              [0,0,0],1];
+      
+T_DH_a = [eye(3),[a;0;0];
+              [0,0,0],1];
+          
+T_DH_x = [Rx_rad(alfa),[0;0;0];
+          [0,0,0],1];         
+T_DH = simplify(T_DH_d*T_DH_theta*T_DH_a*T_DH_x)    
+
 %% Esempio RR planare 2. Scemissimo.
 syms x1 x2 x3 L1 L2 real
 
@@ -106,6 +121,51 @@ TOA3 = [TOA3vee(3,2);TOA3vee(1,3);TOA3vee(2,1)];
 J = [TOA1,TOA2,TOA3] 
 
 %CI SONO RIUSCITO CAZZO
+
+%% Manipolatore RR
+
+syms x1 x2 x3 L0 L1
+
+R0 = [Rz_rad(x1),[0;0;0];
+    0,0,0,1];
+T0 = [eye(3),[L0;0;0];
+     0,0,0,1];
+ 
+R1 = [Rz_rad(x2),[0;0;0];
+    0,0,0,1];
+T1 = [eye(3),[L1;0;0];
+     0,0,0,1];
+
+T0 = R0*T0;
+T1 = R1*T1;
+
+T01 = simplify(T0*T1)
+
+%% Manipolatore Robot Cilindrico a 3 bracci
+clear
+close all
+clc
+
+syms x1 x2 x3 d0 d1 d2 real
+R0 = [Rz_rad(x1),[0;0;0];
+       0,0,0,1];
+   
+T0 = [eye(3),[0;0;d0];
+      0,0,0,1];
+ 
+Trt0 = R0*T0;
+
+R1 = [Rx_rad(-pi/2),[0;0;0];
+       0,0,0,1];
+   
+T1 = [eye(3),[0;0;d1];
+      0,0,0,1];
+ 
+Trt1 = R1*T1;
+
+T01 = simplify(Trt0*Trt1)
+
+
 
 
 
