@@ -5,11 +5,11 @@ addpath('utils');
 
              
 %% Jacobiano
-syms x1 x2 x3 x4 L  Ixx1 Iyy1 Izz1  Ixx2 Iyy2 Izz2  Ixx3 Iyy3 Izz3 m_1 m_3 m_2 real
+syms tau g ddx1 ddx2 dx1 dx2 x1 x2 L  Ixx1 Iyy1 Izz1  Ixx2 Iyy2 Izz2  Ixx3 Iyy3 Izz3 m_1 m_3 m_2 real
 
-T_1 = T1(x1); %Rispetto a G1
-T_3 = T3(x1); %Rispetto alla massa motore
-T_2 = T2(x1,x2); %Rispetto al rotore, collegato al motore.
+T_1 = T1(x1) %Rispetto a G1
+T_3 = T3(x1) %Rispetto alla massa motore
+T_2 = T2(x1,x2) %Rispetto al rotore, collegato al motore.
 
 %% Presi da SolidWorks
 
@@ -102,3 +102,25 @@ Bo2 = I_0_rotore;
 Bo3 = I_0_motore;
 
 B = Bp1+Bp2+Bp3+Bo1+Bo2+Bo3
+
+%% Calcolo C
+%Simbolo di Christoffel
+
+C11 = 0.5*((diff(B(1,1),x1)+diff(B(1,1),x1)-diff(B(1,1),x1))*dx1 + (diff(B(1,1),x2)+diff(B(1,2),x1)-diff(B(1,2),x1))*dx2);
+C12 = 0.5*((diff(B(1,2),x1)+diff(B(1,1),x2)-diff(B(2,1),x1))*dx1 + (diff(B(1,1),x2)+diff(B(1,2),x2)-diff(B(2,2),x1))*dx2);
+C21 = 0.5*((diff(B(2,1),x1)+diff(B(2,1),x1)-diff(B(1,1),x2))*dx1 + (diff(B(2,1),x2)+diff(B(1,2),x1)-diff(B(2,2),x2))*dx2);
+C22 = 0.5*((diff(B(2,2),x1)+diff(B(2,1),x2)-diff(B(2,1),x2))*dx1 + (diff(B(2,2),x2)+diff(B(2,2),x2)-diff(B(2,2),x2))*dx2);
+
+C = [C11,C12;
+     C21,C22]
+ 
+ %% Calcolo G
+ 
+ g_0 = [0,-g,0]';
+ 
+ G = simplify(-(m_1*Jp1'*g_0 + m_2*Jp2'*g_0 + m_3*Jp3'*g_0));
+ 
+ %% EQ DINAMICA
+ 
+ %% B*[ddx1,ddx2]'+C*[dx1,dx2]'+ G = [0,tau]' 
+ 
