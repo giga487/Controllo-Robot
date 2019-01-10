@@ -118,9 +118,5 @@ C = [C11,C12;
  
  g_0 = [0,-g,0]';
  
- G = simplify(-(m_1*Jp1'*g_0 + m_2*Jp2'*g_0 + m_3*Jp3'*g_0));
- 
- %% EQ DINAMICA
- 
- %% B*[ddx1,ddx2]'+C*[dx1,dx2]'+ G = [0,tau]' 
+ G = simplify(-(m_1*Jp1'*g_0 + m_2*Jp2'*g_0 + m_3*Jp3'*g_0))
  
