@@ -1,4 +1,4 @@
-function [B,C,G] = Generatore_Dinamica_SIMULINK(parameter,q,dq)
+function [B,C,G] = Generatore_Dinamica_SIMULINK(parameter,q1,q2,dq1,dq2)
 
 g = 9.81;
 L = parameter(1);
@@ -7,10 +7,10 @@ m_2 = parameter(3);
 m_3 = parameter(4);
 diametro_ruota = parameter(5);
 
-x1 = q(1); %Angolo di rotazione asta
-x2 = q(2); %Angolo di rotazione rotore
-dx1 = dq(1);
-dx2 = dq(2);
+x1 = q1; %Angolo di rotazione asta
+x2 = q2; %Angolo di rotazione rotore
+dx1 = dq1;
+dx2 = dq2;
 
 Izz2 = m_2*(diametro_ruota/2)^2; %RUOTA
 Izz3 = L^2*m_3;      %MOTORE
