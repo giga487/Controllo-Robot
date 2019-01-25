@@ -117,9 +117,9 @@ a = 0.05;
 
 parametri = [m_r,m_c,R_r,L,a]';
 parametri_stimati = parametri;
-B = gen_dinamica_B(q,parameter);
-C = gen_dinamica_C(q,dq,parameter);
-G = gen_dinamica_G(q,parameter);
+B = gen_dinamica_B(q,parametri);
+C = gen_dinamica_C(q,dq,parametri);
+G = gen_dinamica_G(q,parametri);
 Q;
 
 Kp = -1000;
