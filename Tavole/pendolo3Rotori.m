@@ -3,7 +3,7 @@ clear
 clc
 addpath('utils');
 
-syms t taux tauy tauz m_asta m_telaio m_Rx m_Ry m_Rz R L_asta x1 L x2 x3 x4 x5 x6 L a real
+syms t taux tauy tauz m_asta m_telaio m_Rx m_Ry m_Rz R L_asta x1 L x2 x3 x4 x5 x6 g L a real
 
 % m_asta = 0.05;
 % m_telaio = 0.50;
@@ -31,6 +31,7 @@ CM3_RotX = [m_Rx*R^2,0,0;   %ROTOREX
 CM4_RotY = [0,0,0;   %ROTOREY
             0,m_Ry*R^2,0;
             0,0,0];   
+        
 CM5_RotZ = [0,0,0;   %ROTOREY
             0,0,0;
             0,0,m_Rz*R^2];   
@@ -51,6 +52,7 @@ p = A1(1:3,4);
 JpASTA = simplify([jacobian(p(1),[x1,x2,x3,x4,x5,x6]);
                    jacobian(p(2),[x1,x2,x3,x4,x5,x6]);
                    jacobian(p(3),[x1,x2,x3,x4,x5,x6])]);
+               
 p = A2(1:3,4);              
 JpTelaio = simplify([jacobian(p(1),[x1,x2,x3,x4,x5,x6]);
                      jacobian(p(2),[x1,x2,x3,x4,x5,x6]);
@@ -235,7 +237,22 @@ B = simplify(B_asta+B_telaio+B_Rx+B_Ry+B_Rz);
 
 
 %% C
-syms dx1 dx2 dx3 dx4 dx5 dx6
-C = CoriolisMatrix(B,[x1;x2;x3;x4;x5;x6],[dx1;dx2;dx3;dx4;dx5;dx6]);
+syms dx1 dx2 dx3 dx4 dx5 dx6 real
+q = [x1,x2,x3,x4,x5,x6];
+dq = [dx1,dx2,dx3,dx4,dx5,dx6];
+C = CoriolisMatrix(B,q',dq');
+
+%% G
+g = [0,0,-9.81]';
+G = simplify(-JpASTA'*m_asta*g-JpTelaio'*m_telaio*g-JpRY'*m_Ry*g-JpRX'*m_Rx*g-JpRZ'*m_Rz*g)
+
+%% TAU
+
+syms Tx Ty Tz real
+
+Q(1:3) = 0;
+Q(4) = simplify(Tx*Ax(1:3,1:3)'*Jo3(:,3));
+Q(5) = simplify(Ty*Jo4(:,4)');
+Q(6) = simplify(Tz*Jo5(:,5)');
 
 
