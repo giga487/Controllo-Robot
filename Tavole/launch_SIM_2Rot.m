@@ -116,12 +116,35 @@ L = 0.3;
 a = 0.05;
 
 parametri = [m_r,m_c,R_r,L,a]';
-parametri_stimati = parametri;
+parametri_stimati = parametri.*1.01;
 B = gen_dinamica_B(q,parametri);
 C = gen_dinamica_C(q,dq,parametri);
 G = gen_dinamica_G(q,parametri);
 Q;
 
-Kp = -1000;
-Kd = -500;
+Kp = -950;
+Kd = -250;
+
+
+%% SIM
+
+sim('PID_2Rotori',9)
+%%
+x3.data = mod(x3.data,2*pi);
+
+figure;
+subplot(3,1,1);
+plot(x1*180/pi); ylabel('x1');
+subplot(3,1,2);
+plot(x2*180/pi); ylabel('x2');
+subplot(3,1,3);
+plot(x3*180/pi); ylabel('x3');
+
+figure;
+subplot(3,1,1);
+plot(X);ylabel('Coord X');
+subplot(3,1,2);
+plot(Y);ylabel('Coord Y');
+subplot(3,1,3);
+plot(Z);ylabel('Coord Z');
 
