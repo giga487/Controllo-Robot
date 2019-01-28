@@ -32,8 +32,7 @@ R = T02(1:3,1:3);
 JacobianP = simplify([jacobian(p(1),[x1,x2,x3]);
              jacobian(p(2),[x1,x2,x3]);
              jacobian(p(3),[x1,x2,x3])]);
-         
-        
+
 dR_x1 = diff(R,x1);
 dR_x2 = diff(R,x2);
 dR_x3 = diff(R,x3);
