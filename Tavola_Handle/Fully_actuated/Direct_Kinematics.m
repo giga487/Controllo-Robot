@@ -7,7 +7,10 @@ a3 = 0.1;
 a4 = 0.1;
 a5 = 0.1;
 a6 = 0.1;
-A1 = matrixDH(0,0,0,x1);
+
+R_ruota = 0.02;
+A1 = [Rz_rad(x1),[R_ruota*x1,R_ruota,0]';
+      0,0,0,1];
 A2 = matrixDH(a2,0,0,x2+pi/10);
 A3 = matrixDH(a3,0,0,x3+8*pi/10);
 A4 = matrixDH(a4,0,0,x4-pi/2);
