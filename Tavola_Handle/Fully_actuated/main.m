@@ -10,7 +10,6 @@ syms R_ruota x1 x2 x3 x4 x5 x6 a1 a2 a3 a4 a5 a6 I_ruota m_ruota m_asta I_asta .
  
 R_ruota = 0.02;
 
-
 q = [x1,x2,x3,x4,x5,x6]';
 dq = [dx1,dx2,dx3,dx4,dx5,dx6]';
 % A1 = matrixDH(0,0,0,x1);
@@ -24,7 +23,7 @@ dq = [dx1,dx2,dx3,dx4,dx5,dx6]';
 
 
 %% 
-p = Direct_Kinematics(pi,pi,0,0,0,0);
+p = Direct_Kinematics(0,0,0,0,0,0);
 
 figure;
 hold on;
@@ -46,6 +45,7 @@ B = simplify(m_ruota*(Jp_ruota')*Jp_ruota + Jo_ruota'*I_ruota*Jo_ruota...
 %% C
 
 C = CoriolisMatrix(B,q,dq);
+
 %% G
 g = [0,-g0,0]';
 G = -(m_ruota*(Jp_ruota')*g+m_asta*(Jp_asta1)'*g+m_asta*(Jp_asta2)'*g + m_asta*(Jp_asta3)'*g...
