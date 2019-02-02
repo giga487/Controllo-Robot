@@ -218,7 +218,4 @@ Jo_asta5 =  [TOR1,TOR2,TOR3,TOR4,TOR5,TOR6];
                
 J_asta5 = [Jp_asta5;Jo_asta5];
 
-%% Com Jacobian
-
-
 

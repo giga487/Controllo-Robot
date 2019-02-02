@@ -1,18 +1,18 @@
-function [p,com,head] = Direct_Kinematics(x1,x2,x3,x4,x5,xhead)
+function [p,com,head] = Direct_Kinematics(param,x1,x2,x3,x4,x5,xhead)
 
-a1 = 1;
-a2 = 1;
-a3 = 1;
-a4 = 1;
-a5 = 1;
-a6 = 1;
+a1 = param(1,1);
+a2 = param(2,1);
+a3 = param(3,1);
+a4 = param(4,1);
+a5 = param(5,1);
+a6 = param(6,1);
 
-m1 = 1;
-m2 = 1;
-m3 = 1;
-m4 = 3;
-m5 = 3;
-m6 = 10;
+m1 = param(1,2);
+m2 = param(2,2);
+m3 = param(3,2);
+m4 = param(4,2);
+m5 = param(5,2);
+m6 = param(6,2);
 
 angle0_1 = pi/6;
 angle0_2 = 5*pi/6;
