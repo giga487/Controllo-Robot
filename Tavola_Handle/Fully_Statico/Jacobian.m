@@ -3,7 +3,11 @@ clc
 clear
 
 syms a1 a2 a3 a5 a4 a_head x1 x2 x3 x4 x5 x_head ...
-    l_head kr Ixx_b Iyy_b Izz_b real
+    l_head kr Ixx_b Iyy_b Izz_b Ixx_m Iyy_m Izz_m m_mot...
+    m_b1 m_b2 m_b3 m_b4 m_b5 m_b6 dx1 dx2 dx3 dx4 dx5 dx_head g0 dreal
+
+q = [x1 x2 x3 x4 x5 x_head];
+dq = [dx1 dx2 dx3 dx4 dx5 dx_head];
 
 I_braccio = [Ixx_b,0,0;
             0,Iyy_b,0;
@@ -57,6 +61,7 @@ TOR_Head = [TOR6vee(3,2);TOR6vee(1,3);TOR6vee(2,1)];
 
 JoG1 =  [TOR1,TOR2,TOR3,TOR4,TOR5,TOR_Head];     
  
+
 %% MOTORE G1
 
 TM1 = matrixDH(0,0,0,kr*x1+angle0_1);
@@ -202,8 +207,8 @@ JoG3 =  [TOR1,TOR2,TOR3,TOR4,TOR5,TOR_Head];
 
 %% MOTORE 3
 
-TM3 = matrixDH(a1,0,0,x1+angle0_1)*matrixDH(a2,0,0,x2+angle0_1)*...
-      matrixDH(0,0,0,kr*x3+angle0_2);
+TM3 = matrixDH(a1,0,0,x1+angle0_1)*matrixDH(a2,0,0,x2+angle0_2)*...
+      matrixDH(0,0,0,kr*x3+angle0_3);
 pM3 = TM3(1:3,4);
 rM3 = TM3(1:3,1:3);
 p = pM3;
@@ -313,9 +318,9 @@ JoM4 =  [TOR1,TOR2,TOR3,TOR4,TOR5,TOR_Head];
 
 %% BRACCIO 5
 
-TG5 = matrixDH(a1,0,0,x1+angle0_1)*matrixDH(a2,0,0,x1+angle0_2)*...
-     matrixDH(a3,0,0,x3+angle0_3)*matrixDH(a4,0,0,x4+angle0_4)*...
-     matrixDH(a5/2,0,0,x5+angle0_5);
+TG5 = matrixDH(a1,0,0,x1+angle0_1)*matrixDH(a2,0,0,x2+angle0_2)*...
+    matrixDH(a3,0,0,x3+angle0_3)*matrixDH(a4,0,0,x4+angle0_4)*...
+    matrixDH(a5/2,0,0,x5+angle0_5);
 
 pG5 = TG5(1:3,4);
 rG5 = TG5(1:3,1:3);
@@ -464,3 +469,38 @@ TOR_Head = [TOR6vee(3,2);TOR6vee(1,3);TOR6vee(2,1)];
 JoMHead =  [TOR1,TOR2,TOR3,TOR4,TOR5,TOR_Head];   
 
 %% Dinamica
+
+BMot = simplify(m_mot*(JpM1')*JpM1 + (JoM1')*rM1*I_mot*(rM1')*JoM1+...
+     m_mot*(JpM2')*JpM2 + (JoM2')*rM2*I_mot*(rM2')*JoM2+...
+     m_mot*(JpM3')*JpM3 + (JoM3')*rM3*I_mot*(rM3')*JoM3+...
+     m_mot*(JpM4')*JpM4 + (JoM4')*rM4*I_mot*(rM4')*JoM4+...
+     m_mot*(JpM5')*JpM5 + (JoM5')*rM5*I_mot*(rM5')*JoM5+...
+     m_mot*(JpMHead')*JpMHead + (JoMHead')*rMHead*I_mot*(rMHead')*JoMHead);
+ 
+BJoint = simplify(m_b1*(JpG1')*JpG1 + (JoG1')*rG1*I_braccio*(rG1')*JoG1+...
+        m_mot*(JpG2')*JpG2 + (JoG2')*rG2*I_braccio*(rG2')*JoG2+...
+        m_mot*(JpG3')*JpG3 + (JoG3')*rG3*I_braccio*(rG3')*JoG3+...
+        m_mot*(JpG4')*JpG4 + (JoG4')*rG4*I_braccio*(rG4')*JoG4+...
+        m_mot*(JpG5')*JpG5 + (JoG5')*rG5*I_braccio*(rG5')*JoG5+...
+        m_mot*(JpGHead')*JpGHead + (JoGHead')*rGHead*I_braccio*(rGHead')*JoGHead);
+ 
+%% Matrice B
+
+B = BMot+BJoint;
+
+%% Coriolis
+ 
+C = CoriolisMatrix(B,q,dq);
+ 
+%% Gravity
+
+g = [0,-g0,0]';
+
+GJoint = -(m_b1*(JpG1')*g+m_b2*(JpG2')*g+m_b3*(JpG3')*g+m_b4*(JpG4')*g+...
+     m_b5*(JpG5')*g+m_b6*(JpGHead')*g);
+GMot = -(m_mot*(JpM1')*g+m_mot*(JpM2')*g+m_mot*(JpM3')*g+m_mot*(JpM4')*g+...
+     m_mot*(JpM5')*g+m_mot*(JpMHead')*g);
+ 
+GJoint+GMot
+ 
+ 

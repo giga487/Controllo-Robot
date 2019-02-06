@@ -16,5 +16,5 @@ function C = CoriolisMatrix(B,q,dq)
             C(i,j) = sum(e);
         end
     end
-
+    
 end
