@@ -1,4 +1,11 @@
-function [p,com,head] = Direct_Kinematics(param,x1,x2,x3,x4,x5,xhead)
+function [p,com,head] = Direct_Kinematics(param,q)
+
+x1 = q(1);
+x2 = q(2);
+x3 = q(3);
+x4 = q(4);
+x5 = q(5);
+xhead = q(6);
 
 a1 = param(1,1);
 a2 = param(2,1);
@@ -20,6 +27,7 @@ angle0_3 = -3*pi/5;
 angle0_4 = 4*pi/5;
 angle0_5 = pi/10;
 angle0_head = -3*pi/4;
+
 T1 = matrixDH(a1,0,0,x1+angle0_1);
 T2 = matrixDH(a2,0,0,x2+angle0_2);
 T3 = matrixDH(a3,0,0,x3+angle0_3);
@@ -54,18 +62,18 @@ C5 = matrixDH(a5/2,0,0,x5+angle0_5);
 %Head
 C_HEAD = matrixDH(a6,0,0,xhead+angle0_head);
 
-c1 = C1(1:2,4);
+c1 = C1(1:3,4);
 C_m = C1*C2;
-c2 = C_m(1:2,4);
+c2 = C_m(1:3,4);
 C_m = C_m*C3;
-c3 = C_m(1:2,4);
+c3 = C_m(1:3,4);
 C_m = C_m*C4;
-c4 = C_m(1:2,4);
+c4 = C_m(1:3,4);
 C_m = C_m*C5;
-c5 = C_m(1:2,4);
+c5 = C_m(1:3,4);
 
 C_m = C1*C2*C_HEAD;
-c6 = C_m(1:2,4);
+c6 = C_m(1:3,4);
 
 com = (m1*c1 + m2*c2 + m3*c3 + m4*c4 + m5*c5 + m6*c6)...
         / (m1+m2+m3+m4+m5+m6);
