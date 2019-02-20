@@ -8,4 +8,4 @@ q = [q1,q2,q3,q4,q5,q6];
 
 J_com = simplify(jacobian(com,q));
 J_p = simplify(jacobian(p(6,:),q));
-J_head = simplify(jacobian(head,q))
+J_head = simplify(jacobian(head,q));

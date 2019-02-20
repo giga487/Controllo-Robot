@@ -28,11 +28,11 @@ angle0_4 = 4*pi/5;
 angle0_5 = pi/10;
 angle0_head = -3*pi/4;
 
-T1 = matrixDH(a1,0,0,x1+angle0_1);
-T2 = matrixDH(a2,0,0,x2+angle0_2);
-T3 = matrixDH(a3,0,0,x3+angle0_3);
-T4 = matrixDH(a4,0,0,x4+angle0_4);
-T5 = matrixDH(a5,0,0,x5+angle0_5);
+T1 = matrixDH(a1,0,0,x1);
+T2 = matrixDH(a2,0,0,x2);
+T3 = matrixDH(a3,0,0,x3);
+T4 = matrixDH(a4,0,0,x4);
+T5 = matrixDH(a5,0,0,x5);
 % T6 = matrixDH(a6,0,0,x6+pi/2);
 
 p0 = [0,0,0]';
@@ -48,19 +48,19 @@ p5 = T(1:3,4);
 
 p = [p0,p1,p2,p3,p4,p5]';
 
-T3_Head = matrixDH(a6,0,0,xhead+angle0_head);
+T3_Head = matrixDH(a6,0,0,xhead);
 T_HEAD = T1*T2*T3_Head;
 head = T_HEAD(1:3,4);
 
 % Com
-C1 = matrixDH(a1/2,0,0,x1+angle0_1);
-C2 = matrixDH(a2/2,0,0,x2+angle0_2);
-C3 = matrixDH(a3/2,0,0,x3+angle0_3);
-C4 = matrixDH(a4/2,0,0,x4+angle0_4);
-C5 = matrixDH(a5/2,0,0,x5+angle0_5);
+C1 = matrixDH(a1/2,0,0,x1);
+C2 = matrixDH(a2/2,0,0,x2);
+C3 = matrixDH(a3/2,0,0,x3);
+C4 = matrixDH(a4/2,0,0,x4);
+C5 = matrixDH(a5/2,0,0,x5);
 
 %Head
-C_HEAD = matrixDH(a6,0,0,xhead+angle0_head);
+C_HEAD = matrixDH(a6,0,0,xhead);
 
 c1 = C1(1:3,4);
 C_m = C1*C2;

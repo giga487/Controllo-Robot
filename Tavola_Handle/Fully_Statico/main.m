@@ -18,10 +18,12 @@ param = param';
 %% JacobianCorretto
 
 JacobianCorretto
+
+%% 
 calcJacobianAna
 
 %% Utilizzo della cinematica inversa per trovare q_d
-x = 1;
+x = 0.21;
 y = 1;
 z = 0;
 
