@@ -1,4 +1,4 @@
-function plot_robot_fix(p,com,head,hand)
+function plot_robot_fix(p,com,head)
     
     
     figure;
