@@ -14,7 +14,6 @@ param = param';
 
 
 
-
 %% JacobianCorretto
 
 JacobianCorretto
@@ -22,14 +21,15 @@ JacobianCorretto
 %% 
 calcJacobianAna
 
-%% Utilizzo della cinematica inversa per trovare q_d
-x_com = -0.266;
-y_com = 0.574;
+%%
+
+x_com = 0;
+y_com = 1;
 z_com = 0;
 com_des = [x_com,y_com,z_com];
 
-x_head = 0;
-y_head = 0.5;
+x_head = 1;
+y_head = 1.866;
 z_head = 0;
 head_des = [x_head,y_head,z_head];
 
@@ -38,15 +38,6 @@ y_hand = 1;
 z_hand = 0;
 hand_des = [x_hand,y_hand,z_hand];
 
-qd = find_solution_joint(param,com_des,head_des,hand_des);
-
-%% launch sim
-Law_param = [-0.1, -0.5];
-
-sim('pid_handle_statico',9)
-
-%% 
-
 x1 = 30*pi/180;
 x2 = 120*pi/180;
 x3 = -60*pi/180;
@@ -54,5 +45,42 @@ x4 = 90*pi/180;
 x5 = 90*pi/180;
 x6 = -90*pi/180;
 
-[p,com,head] = Direct_Kinematics(param,[x1,x2,x3,x4,x5,x6]');
-plot_robot_fix(p,com,head);
+cond_init = [x1,x2,x3,x4,x5,x6]';
+
+plot_robot_fix(param,[x1,x2,x3,x4,x5,x6]',com_des,hand_des,head_des);
+
+%% Utilizzo della cinematica inversa per trovare q_d
+
+qd = find_solution_joint(param,com_des,head_des,hand_des);
+
+plot_robot_fix(param,qd,com_des,hand_des,head_des);
+
+%%
+q_position = 1.0e+03 *[1.5097;
+    0.3701;
+   -3.4740;
+   -0.0791;
+   -0.1196;
+   -1.8346];
+
+q_position_2 = mod(q_position(:),2*pi);
+
+plot_robot_fix(param,q_position_2,com_des,hand_des,head_des);
+%% launch sim
+Law_param = [-0.06 -0.001];
+q_desiderata = q_position_2;
+
+d_q_desiderata = zeros(6,1);
+%%
+sim('pid_handle_statico',9)
+
+%% 
+
+q_position = q_sim.signals.values(end,:);
+
+% q_position_2 = mod(q_position(1),2*pi);
+
+
+plot_robot_fix(param,q_position',com_des,hand_des,head_des);
+
+
