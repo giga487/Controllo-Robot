@@ -1,12 +1,12 @@
 
 function [B,C,G] = Dinamica(param,q,dq)
 
-x1 = q(1,1);
-x2 = q(2,1);
-x3 = q(3,1);
-x4 = q(4,1);
-x5 = q(5,1);
-x_head = q(6,1); 
+x1 = q(1);
+x2 = q(2);
+x3 = q(3);
+x4 = q(4);
+x5 = q(5);
+x_head = q(6); 
 
 dx1 = dq(1);
 dx2 = dq(2);

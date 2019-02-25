@@ -57,12 +57,14 @@ q_position = 1.0e+03 *[1.5097;
    -1.8346];
 
 % q_position_2 = mod(q_position(:),2*pi);
-q_position_2 = [x1,x2,x3,x4,q_position(5),x6]';
+q_position_2 = [x1,x2,x3,x4,pi/3,x6]';
 
 plot_robot_fix(param,q_position_2,com_des,hand_des,head_des);
 %% launch sim
-Law_param = [0.81 0];
+Law_param = [0.1 0];
 q_desiderata = q_position_2;
+
+% plot_robot_fix(param,q_desiderata,com_des,hand_des,head_des);
 
 d_q_desiderata = zeros(6,1);
 %%
