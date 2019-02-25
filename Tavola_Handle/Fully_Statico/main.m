@@ -1,12 +1,5 @@
 %% il problema viene visto attualmente come statico, non c'è ruota.
 
-x1 = 0;
-x2 = 0;
-x3 = 0;
-x4 = 0;
-x5 = 0;
-x6 = 0;
-
 param = [a1,a2,a3,a4,a5,a_head,0;
          m1,m2,m3,m4,m5,m_head,m_mot];
 
@@ -63,11 +56,12 @@ q_position = 1.0e+03 *[1.5097;
    -0.1196;
    -1.8346];
 
-q_position_2 = mod(q_position(:),2*pi);
+% q_position_2 = mod(q_position(:),2*pi);
+q_position_2 = [x1,x2,x3,x4,q_position(5),x6]';
 
 plot_robot_fix(param,q_position_2,com_des,hand_des,head_des);
 %% launch sim
-Law_param = [-0.06 -0.001];
+Law_param = [0.81 0];
 q_desiderata = q_position_2;
 
 d_q_desiderata = zeros(6,1);
@@ -79,7 +73,6 @@ sim('pid_handle_statico',9)
 q_position = q_sim.signals.values(end,:);
 
 % q_position_2 = mod(q_position(1),2*pi);
-
 
 plot_robot_fix(param,q_position',com_des,hand_des,head_des);
 
