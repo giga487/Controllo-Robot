@@ -57,14 +57,19 @@ q_position = 1.0e+03 *[1.5097;
    -1.8346];
 
 % q_position_2 = mod(q_position(:),2*pi);
-q_position_2 = [x1,x2,x3,x4,pi/3,x6]';
+% q_position_2 = [x1,x2,x3,x4,pi/3,x6]';
+q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 
-plot_robot_fix(param,q_position_2,com_des,hand_des,head_des);
+[p,com_d,head_r_d] = Direct_Kinematics(param,q_position_2);
+
+hand_des = p(6,:)';
+
+plot_robot_fix(param,q_position_2,com_d,hand_des,head_r_d);
 %% launch sim
-Law_param = [0.1 0];
+% Law_param = [0.1 0.1];
+% q_desiderata = q_position_2
+Law_param = [0.1 5];
 q_desiderata = q_position_2;
-
-% plot_robot_fix(param,q_desiderata,com_des,hand_des,head_des);
 
 d_q_desiderata = zeros(6,1);
 %%
@@ -72,10 +77,12 @@ sim('pid_handle_statico',9)
 
 %% 
 
-q_position = q_sim.signals.values(end,:);
+q_position_sim = q_sim.signals.values(:,:);
+q_error_sim = error_sim.signals.values(:,:);
 
 % q_position_2 = mod(q_position(1),2*pi);
 
-plot_robot_fix(param,q_position',com_des,hand_des,head_des);
+plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
+
 
 
