@@ -1,4 +1,4 @@
-%%PID LAUNCH
+%% CONTROLLO DI COPPIA
 % DEFINIZIONE DEI PARAMETRI DELLA SIMULAZIONE
 
 param = [a1,a2,a3,a4,a5,a_head,0;
@@ -25,15 +25,23 @@ Law_param = [0.2 5];
 q_desiderata = q_position_2;
 
 T = 100;
+
+%% TRAIETTORIA
+
+A = [1,1,1,1,1,1];
+f = [1,1,1,1,1,1];
+
+
+
 %% SIMULAZIONE
 
-sim('pid_handle_statico',T)
+sim('ControlloCoppia_handle_statico',T)
 
 %% 
 
-q_position_sim = q_sim_PID.signals.values(:,:);
+q_position_sim = q_sim.signals.values(:,:);
 time = q_sim.time;
-q_error_sim = error_sim_PID.signals.values(:,:);
+q_error_sim = error_sim.signals.values(:,:);
 
 plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
 plot_error(q_error_sim,time);
