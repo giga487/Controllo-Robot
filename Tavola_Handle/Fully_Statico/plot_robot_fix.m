@@ -27,7 +27,7 @@ function plot_robot_fix(param,q_out,com_d,hand_d,head_d)
         text(com_d(1),com_d(2)," "+str(7),'Color','r')
         viscircles([head_d(1),head_d(2)],0.1,'Color','b');
         text(head_d(1),head_d(2)," "+str(8),'Color','r')
-        pause(0.01);
+        pause(0.001);
     end
 
     hold off;

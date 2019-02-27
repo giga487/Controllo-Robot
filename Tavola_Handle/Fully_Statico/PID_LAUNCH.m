@@ -32,7 +32,7 @@ sim('pid_handle_statico',T)
 %% 
 
 q_position_sim = q_sim_PID.signals.values(:,:);
-time = q_sim.time;
+time = q_sim_PID.time;
 q_error_sim = error_sim_PID.signals.values(:,:);
 
 plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
