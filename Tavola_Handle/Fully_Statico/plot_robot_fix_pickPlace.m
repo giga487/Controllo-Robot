@@ -1,12 +1,12 @@
-function plot_robot_fix(param,q_out,com_d,hand_d,head_d)       
+function plot_robot_fix_pickPlace(param,q_out,pos0,posF)       
     
-    str = ["1","2","3","4","5","Hand","Com_D", "Head_D", "Hand_D"];
+    str = ["1","2","3","4","5","pos0","posF"];
 
     
     figure;       
 
     [r c] = size(q_out(:,:));
-    for i = 1:1:c
+    for i = 1:1:ca1
         subplot(2,1,1);
         clf;
         axis([-2 2 0 4]);
@@ -21,13 +21,11 @@ function plot_robot_fix(param,q_out,com_d,hand_d,head_d)
         plot([p(3,1) head_r(1,1)],[p(3,2) head_r(2,1)],'k');
         viscircles([head_r(1,1),head_r(2,1)],0.3);
         viscircles([com(1),com(2)],0.01);    
-        viscircles([hand_d(1),hand_d(2)],0.1,'Color','b');
-        text(hand_d(1),hand_d(2)," "+str(9),'Color','r')
-        viscircles([com_d(1),com_d(2)],0.1,'Color','b');
-        text(com_d(1),com_d(2)," "+str(7),'Color','r')
-        viscircles([head_d(1),head_d(2)],0.1,'Color','b');
-        text(head_d(1),head_d(2)," "+str(8),'Color','r')
-        pause(0.001);
+        viscircles([pos0(1),pos0(2)],0.1,'Color','b');
+        text(pos0(1),pos0(2)," "+str(9),'Color','r')
+        viscircles([posF(1),posF(2)],0.1,'Color','b');
+        text(posF(1),posF(2)," "+str(7),'Color','r')
+        pause(0.01);
     end
 
     hold off;

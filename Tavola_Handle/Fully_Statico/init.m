@@ -4,6 +4,7 @@ close all
 clc
 clear
 addpath('Utils');
+addpath('traj')
 
 m1 = 1;
 m2 = 1;
