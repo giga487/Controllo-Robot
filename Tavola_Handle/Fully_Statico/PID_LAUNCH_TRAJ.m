@@ -33,7 +33,7 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 hand_des = p(6,:)';
 
 %% LAW PARAM
-Law_param = [5 2];
+Law_param = [1000 50];
 q_desiderata = q_position_2;
 
 
@@ -42,7 +42,7 @@ thetad0 = zeros(size(q_desiderata,1));
 thetadf = zeros(size(q_desiderata,1));
 
 tstart = 0;
-tfinal = 1;
+tfinal = 2;
 
 % find the tfinalcoefficient of the 3rd order polynomial trajectory
 [a3,a2,a1,a0] = createTraj3(cond_init,q_desiderata,thetad0,thetadf,tstart,tfinal);
@@ -52,7 +52,7 @@ tfinal = 1;
 p = [a3,a2,a1,a0];
 
 % Create time vector
-t = linspace(tstart,tfinal,50);
+t = linspace(tstart,tfinal,100);
 
 [q,dq,ddq] = generatore_traiettorie(p,t);
 
@@ -68,7 +68,7 @@ dq_traj.signals.values = dq';
 dq_traj.signals.dimensions = 6;
 %% SIMULAZIONE
 
-sim('PID_trajectory_Handle',50)
+sim('PID_trajectory_Handle',tfinal)
 
 %% 
 close all
@@ -76,5 +76,5 @@ q_position_sim = q_sim_PID.signals.values(:,:);
 time = q_sim_PID.time;
 q_error_sim = error_sim_PID.signals.values(:,:);
 
-plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
+plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d,time);
 plot_error(q_error_sim,time);
