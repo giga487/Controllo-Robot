@@ -21,27 +21,26 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 [p,com_d,head_r_d] = Direct_Kinematics(param,q_position_2);
 hand_des = p(6,:)';
 
-Law_param = [0.2 5];
+Law_param = [0.2 2];
 q_desiderata = q_position_2;
 
 T = 100;
 
 %% TRAIETTORIA
 
-A = [1,1,1,1,1,1];
-f = [1,1,1,1,1,1];
-
+A = [1,0,0,0,0,0];
+f = [10,10,10,10,10,10];
 
 
 %% SIMULAZIONE
 
-sim('ControlloCoppia_handle_statico',T)
+sim('controlloCoppia_handle_statico',T)
 
 %% 
 
-q_position_sim = q_sim.signals.values(:,:);
-time = q_sim.time;
-q_error_sim = error_sim.signals.values(:,:);
+q_position_sim = q_sim_CompTorque.signals.values(:,:);
+time = q_sim_CompTorque.time;
+q_error_sim = error_sim_CompTorque.signals.values(:,:);
 
-plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
+% plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d);
 plot_error(q_error_sim,time);
