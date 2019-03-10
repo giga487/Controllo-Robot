@@ -33,7 +33,15 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 hand_des = p(6,:)';
 
 %% LAW PARAM
-Law_param = [1000 50];
+Law_param = [1000,1000,1000,1000,1000,1000;
+             50,50,50,50,50,50];
+         
+I = eye(6);
+                  
+Kp = Law_param(1,:).*I
+Kd = Law_param(2,:).*I
+
+Legge = [Kp,Kd];
 q_desiderata = q_position_2;
 
 

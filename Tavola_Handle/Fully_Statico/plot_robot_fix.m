@@ -2,7 +2,6 @@ function plot_robot_fix(param,q_out,com_d,hand_d,head_d,time)
     
     str = ["1","2","3","4","5","Hand","Com_D", "Head_D", "Hand_D"];
 
-    
     figure;       
 
     [r c] = size(q_out(:,:));
@@ -27,11 +26,11 @@ function plot_robot_fix(param,q_out,com_d,hand_d,head_d,time)
         text(com_d(1),com_d(2)," "+str(7),'Color','r')
         viscircles([head_d(1),head_d(2)],0.1,'Color','b');
         text(head_d(1),head_d(2)," "+str(8),'Color','r')
-<<<<<<< HEAD
+
         pause(time(i+1)-time(i));
-=======
-        pause(0.001);
->>>>>>> 3544d9c507445f92ae46cf92d314de73fcee0f04
+
+%         pause(0.001);
+
     end
 
     hold off;
