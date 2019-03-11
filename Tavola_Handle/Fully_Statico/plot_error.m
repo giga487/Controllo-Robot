@@ -23,7 +23,7 @@ function plot_error(error,time)
     plot(time(:),error(:,6));
     title('Error Hand');
     hold off;
-
+%     title(sprintf("%s",string_title));
     
 
 end
