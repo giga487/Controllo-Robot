@@ -50,7 +50,7 @@ thetad0 = zeros(size(q_desiderata,1));
 thetadf = zeros(size(q_desiderata,1));
 
 tstart = 0;
-tfinal = 0.5;
+tfinal = 1;
 
 % find the tfinalcoefficient of the 3rd order polynomial trajectory
 [a3,a2,a1,a0] = createTraj3(cond_init,q_desiderata,thetad0,thetadf,tstart,tfinal);
