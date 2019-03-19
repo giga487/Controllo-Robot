@@ -1,11 +1,17 @@
 %% Simulation
-kp = 100;
-kd = 10;
+
+%L'obiettivo è riuscire a fare muovere il robot dalla posizione zero,
+%portarlo in una posizione di place e poi riportarlo in condizione
+%iniziale.
+
+kp = 150;
+kd = 30;
 
 Law = [kp, kd];
 
 %%
-sim('COMPTORQUE_Amato',10)
+sim('COMPTORQUE_Amato_spaziogiunti',50)
+
 
 %% Simulation Result
 

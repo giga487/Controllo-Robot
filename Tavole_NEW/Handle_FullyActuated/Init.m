@@ -2,10 +2,10 @@
 %%Parametri del problema
 
 pulsazione_circolare = 1;
-A_circolare = 1;
-
+A_circolare = 0.01;
+scaleF = 10;
 % plot
-x0 = -4;
+x0 = -2;
 y0 = 2;
 xL = -5;
 xR = 2;
