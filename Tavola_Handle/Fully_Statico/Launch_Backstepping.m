@@ -50,7 +50,7 @@ thetad0 = zeros(size(q_desiderata,1));
 thetadf = zeros(size(q_desiderata,1));
 
 tstart = 0;
-tfinal = 0.5;
+tfinal = 1;
 
 % find the tfinalcoefficient of the 3rd order polynomial trajectory
 [a3,a2,a1,a0] = createTraj3(cond_init,q_desiderata,thetad0,thetadf,tstart,tfinal);
@@ -80,14 +80,13 @@ ddq_traj.signals.values = ddq';
 ddq_traj.signals.dimensions = 6;
 %% SIMULAZIONE
 
-sim('controlloCoppia_handle_statico',tfinal)
+sim('backstepping_handle_statico',tfinal)
 
 %% 
-string_title = 'BackStepping';
+string_title = 'Backstepping';
 close all
-q_position_sim = q_sim_backStepping.signals.values(:,:);
-time = q_sim_backStepping.time;
-q_error_sim = error_sim_backStepping.signals.values(:,:);
-
+q_position_sim = q_sim_CompTorque.signals.values(:,:);
+time = q_sim_CompTorque.time;
+q_error_sim = error_sim_CompTorque.signals.values(:,:);
 plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d,time,string_title);
 plot_error(q_error_sim,time); %error in degree
