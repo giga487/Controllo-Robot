@@ -12,5 +12,5 @@ time = q_out.time(:,:);
 plot_error(p_error_sim,time);
 plot_tau(tau_sim,time);
 
-string_text = 'PID';
+string_text = 'PD';
 plot_robot_fix(param,q_position_sim',time,string_text);

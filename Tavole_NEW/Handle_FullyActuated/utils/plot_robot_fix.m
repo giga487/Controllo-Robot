@@ -15,7 +15,8 @@ function plot_robot_fix(param,q_out,time,string_text)
     for i = 1:1:c-1
         subplot(2,1,1);
         clf;
-        axis([x_L x_R y_L y_U]);
+%         axis([x_L x_R y_L y_U]);
+        axis equal;
         hold on;
         [p,com,head_r] = Direct_Kinematics(param,q_out(:,i));
         plot(p(1:6,1),p(1:6,2),'o-');
