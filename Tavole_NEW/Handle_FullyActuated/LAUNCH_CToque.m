@@ -4,10 +4,11 @@
 %portarlo in una posizione di place e poi riportarlo in condizione
 %iniziale.
 
-kp = 150;
-kd = 30;
+kp = 20000;
+kd = 10;
 
 Law = [kp, kd];
+
 
 %%
 sim('COMPTORQUE_Amato_spaziogiunti',50)

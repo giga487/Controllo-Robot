@@ -1,11 +1,12 @@
 
 %%Parametri del problema
+t_c = 0.01;
 
 pulsazione_circolare = 1;
-A_circolare = 0.01;
-scaleF = 10;
+A_circolare_hand = 0.5;
+A_circolare_com = 0.1;
 % plot
-x0 = -2;
+x0 = -1.5;
 y0 = 2;
 xL = -5;
 xR = 2;
@@ -37,7 +38,7 @@ m2 = 1;
 m3 = 1;
 m4 = 3;
 m5 = 3;
-m_head = 1;
+m_head = 10;
 m_mot = 0.25;
 
 a1 = 1;

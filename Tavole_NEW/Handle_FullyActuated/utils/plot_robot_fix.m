@@ -3,10 +3,10 @@ function plot_robot_fix(param,q_out,time,string_text)
     str = ["1","2","3","4","5","Hand"];
 
     figure;     
-    x_L = -6;
-    x_R = 2;
+    x_L = -3;
+    x_R = 3;
     y_L = 0;
-    y_U = 8;
+    y_U = 6;
     x_traj = [];
     y_traj = [];
     x_com_traj = [];
@@ -17,8 +17,8 @@ function plot_robot_fix(param,q_out,time,string_text)
     for i = 1:1:c-1
         subplot(2,1,1);
         clf;
-%         axis([x_L x_R y_L y_U]);
-        axis equal;
+        axis([x_L x_R y_L y_U]);
+%         axis equal;
         hold on;
         [p,com,head_r] = Direct_Kinematics(param,q_out(:,i));
         plot(p(1:6,1),p(1:6,2),'o-');
@@ -40,7 +40,7 @@ function plot_robot_fix(param,q_out,time,string_text)
         viscircles([com(1),com(2)],0.01);    
         title(sprintf("%s",string_text));
         
-        pause(time(i+1)-time(i));
+        pause(0.001);
 
 %         pause(0.0008);
 
