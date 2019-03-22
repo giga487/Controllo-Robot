@@ -14,7 +14,7 @@ function plot_robot_fix(param,q_out,time,string_text)
     
     [r c] = size(q_out(:,:));
     
-    for i = 1:1:c-1
+    for i = 1:10:c-10
         subplot(2,1,1);
         clf;
         axis([x_L x_R y_L y_U]);

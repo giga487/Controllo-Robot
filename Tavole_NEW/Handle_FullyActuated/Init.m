@@ -6,12 +6,12 @@ pulsazione_circolare = 1;
 A_circolare_hand = 0.5;
 A_circolare_com = 0.1;
 % plot
-x0 = -1.5;
+x0 = -2;
 y0 = 2;
 xL = -5;
 xR = 2;
 yD = 0;
-yU = 7;
+yU = 4;
 
 % PID parameter
 
