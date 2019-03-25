@@ -4,10 +4,10 @@
 %portarlo in una posizione di place e poi riportarlo in condizione
 %iniziale.
 
-kp = 20000;
-kd = 20;
+lambda = 0.1;
+kd = 10;
 
-Law = [kp, kd];
+Law = [lambda, kd];
 
 
 %%

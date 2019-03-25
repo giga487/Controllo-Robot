@@ -3,10 +3,10 @@
 t_c = 0.01;
 
 pulsazione_circolare = 1;
-A_circolare_hand = 0.5;
+A_circolare_hand = 0.0005;
 A_circolare_com = 0.1;
 % plot
-x0 = -2;
+x0 = -1.5;
 y0 = 2;
 xL = -5;
 xR = 2;
