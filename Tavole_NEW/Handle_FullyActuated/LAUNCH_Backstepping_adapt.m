@@ -4,25 +4,28 @@
 %portarlo in una posizione di place e poi riportarlo in condizione
 %iniziale.
 
-kp = 20000;
-kd = 20;
+K_lambda = 0.7;
+K_d = 15;
+K_r = 500;
 
-Law = [kp, kd];
+pi_vec = [8;1];
+
+Law = [K_lambda, K_d, K_r];
 
 
 %%
-sim('BACKSTEPPING_Amato',50)
+sim('BACKSTEPPING_Amato_Adattivo2',50)
 
 
 %% Simulation Result
 
-q_position_sim = q_out_CompT.signals.values(:,:);
+q_position_sim = q_out_Backstepping_Ada.signals.values(:,:);
 % p_error_sim = p_error.signals.values(:,:);
 % tau_sim = tau.signals.values(:,:);
-time = q_out_CompT.time(:,:);
+time = q_out_Backstepping_Ada.time(:,:);
 
 % plot_error(p_error_sim,time);
 % plot_tau(tau_sim,time);
 
-string_text = 'ComputedTorque';
+string_text = 'Back Stepping Adaptative';
 plot_robot_fix(param,q_position_sim',time,string_text);

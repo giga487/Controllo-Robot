@@ -16,13 +16,13 @@ sim('BACKSTEPPING_Amato',50)
 
 %% Simulation Result
 
-q_position_sim = q_out_CompT.signals.values(:,:);
+q_position_sim = q_out_backstepping.signals.values(:,:);
 % p_error_sim = p_error.signals.values(:,:);
 % tau_sim = tau.signals.values(:,:);
-time = q_out_CompT.time(:,:);
+time = q_out_backstepping.time(:,:);
 
 % plot_error(p_error_sim,time);
 % plot_tau(tau_sim,time);
 
-string_text = 'ComputedTorque';
+string_text = 'Backstepping control';
 plot_robot_fix(param,q_position_sim',time,string_text);

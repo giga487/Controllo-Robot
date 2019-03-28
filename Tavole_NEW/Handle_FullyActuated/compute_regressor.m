@@ -9,7 +9,7 @@ syms a
 regressor = a*zeros(n,2); % just to make Y symbolic
 
 for i=1:n
-    [c t] = coeffs(dynamic(i), m5);
+    [c t] = coeffs(dynamic(i), m_b6);
     
     if size(t,2)==2
         regressor(i,:) = c;
@@ -29,7 +29,7 @@ regressor = simplify(regressor);
 
 % test to vefiry that B.ddq + C.dq + G + Fv.dq = Y.pi
 
-test = simplify(dynamic-regressor*[m5;1]);
+test = simplify(dynamic-regressor*[m_b6;1]);
 
 if any(test~=0)
     error('error in regressor computation')

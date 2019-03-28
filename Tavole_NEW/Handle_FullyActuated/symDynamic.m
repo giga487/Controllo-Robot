@@ -33,9 +33,29 @@ g0 = 9.81;
 % Izz_b = m_b1*(h^2+L^2)/12;
 
 
-I_braccio = [Ixx_b,0,0;
-            0,Iyy_b,0;
-            0,0,Izz_b;];
+I_braccio1 = [m_b1*(h^2)/12,0,0;
+            0,m_b1*(L^2)/12,0;
+            0,0,m_b1*(h^2+L^2)/12];
+        
+I_braccio2 = [m_b2*(h^2)/12,0,0;
+              0,m_b2*(L^2)/12,0;
+              0,0,m_b2*(h^2+L^2)/12];
+
+I_braccio3 = [m_b3*(h^2)/12,0,0;
+              0,m_b3*(L^2)/12,0;
+              0,0,m_b3*(h^2+L^2)/12];
+          
+I_braccio4 = [m_b4*(h^2)/12,0,0;
+              0,m_b4*(L^2)/12,0;
+              0,0,m_b4*(h^2+L^2)/12];
+          
+I_braccio5 = [m_b5*(h^2)/12,0,0;
+              0,m_b5*(L^2)/12,0;
+              0,0,m_b5*(h^2+L^2)/12];
+          
+I_braccio6 = [m_b6*(h^2)/12,0,0;
+              0,m_b6*(L^2)/12,0;
+              0,0,m_b6*(h^2+L^2)/12];
 
         %% BRACCIO 1
 
@@ -259,12 +279,12 @@ JoGHead =  simplify([TOR1,TOR2,TOR3,TOR4,TOR5,TOR_Head]);
 
 %% Matrice B
 
-BJoint = (m_b1*(JpG1')*JpG1 + (JoG1')*rG1*I_braccio*(rG1')*JoG1+...
-        m_b2*(JpG2')*JpG2 + (JoG2')*rG2*I_braccio*(rG2')*JoG2+...
-        m_b3*(JpG3')*JpG3 + (JoG3')*rG3*I_braccio*(rG3')*JoG3+...
-        m_b4*(JpG4')*JpG4 + (JoG4')*rG4*I_braccio*(rG4')*JoG4+...
-        m_b5*(JpG5')*JpG5 + (JoG5')*rG5*I_braccio*(rG5')*JoG5+...
-        m_b6*(JpGHead')*JpGHead + (JoGHead')*rGHead*I_braccio*(rGHead')*JoGHead);
+BJoint = (m_b1*(JpG1')*JpG1 + (JoG1')*rG1*I_braccio1*(rG1')*JoG1+...
+        m_b2*(JpG2')*JpG2 + (JoG2')*rG2*I_braccio2*(rG2')*JoG2+...
+        m_b3*(JpG3')*JpG3 + (JoG3')*rG3*I_braccio3*(rG3')*JoG3+...
+        m_b4*(JpG4')*JpG4 + (JoG4')*rG4*I_braccio4*(rG4')*JoG4+...
+        m_b5*(JpG5')*JpG5 + (JoG5')*rG5*I_braccio5*(rG5')*JoG5+...
+        m_b6*(JpGHead')*JpGHead + (JoGHead')*rGHead*I_braccio6*(rGHead')*JoGHead);
  
 
 B = simplify(BJoint);
