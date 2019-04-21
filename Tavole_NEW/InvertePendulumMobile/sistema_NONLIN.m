@@ -7,15 +7,15 @@ close all
 
 x = sym('x', [6 1], 'real'); % state
 
-g = 9.8;
-Mw = 0.03;
-m = 2;
-r = 0.04;
-l = 0.1;
-Jw = 3.17*10^-5;
-Jtheta = 0.003;
-Jdelta = 0.002;
-D = 0.17;
+g = sym(9.8);
+Mw = sym(0.03);
+m = sym(2);
+r = sym(0.04);
+l = sym(0.1);
+Jw = sym(3.17*10^-5);
+Jtheta = sym(0.003);
+Jdelta = sym(0.002);
+D = sym(0.17);
 
 P = m*l^2 +Jtheta;
 Q = 2*Mw + 2*Jw/r^2 + m;
@@ -29,12 +29,16 @@ f = [ x(2);
      x(6);
      1/(2*B)*(-(m^2)*(l^2)*sin(2*x(5))*(x(6))^2+Q*m*(l^2)*sin(2*x(5))*(x(2))^2+2*Q*m*g*l*sin(x(5)))];
 
+f = vpa(f,2); 
+
 g1 = [0;
       D/(r*(alfa+m*(l^2)*(sin(x(5))^2)));
       0;
       0;
       0;
       0];
+  
+g1 = vpa(g1,2); 
 
 g2 = [0;
       0;
@@ -43,6 +47,7 @@ g2 = [0;
       0;
       -(Q*r + m*l*cos(x(5)))/(B*r)];
   
+g2 = vpa(g2,2);   
   
 % tau = [Tw;Tv];
 
@@ -54,7 +59,7 @@ g2 = [0;
 ad_fng1 = liebracket(f,g1,x,6);
 
 %%
-ad_fng2 = liebracket(f,g2,x,7);
+ad_fng2 = liebracket(f,g2,x,6);
 
  
      
