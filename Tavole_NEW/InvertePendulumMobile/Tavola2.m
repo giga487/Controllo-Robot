@@ -102,11 +102,33 @@ O = [ad_fh1(:,1),ad_fh2(:,1),ad_fh3(:,1),ad_fh4(:,1)]
 
 % Filtrazione1
 
-dO1 = jacobian(h(1,:),x);
-dO2 = jacobian(h(2,:),x);
-dO3 = jacobian(h(3,:),x);
-dO4 = jacobian(h(4,:),x);
+O = [h(1);h(2);h(3);h(4)];
 
-dO = [dO1;dO2;dO3;dO4];
 
-ad_g1h1 = vpa(liebracket(g1,h(1,:),x,1),2)
+Lf_h1 = jacobian(h(1),x)*f;
+Lf_h2 = jacobian(h(2),x)*f;
+Lf_h3 = jacobian(h(3),x)*f;
+Lf_h4 = jacobian(h(4),x)*f;
+
+Lg1_h1 = jacobian(h(1),x)*g1;
+Lg1_h2 = jacobian(h(2),x)*g1;
+Lg1_h3 = jacobian(h(3),x)*g1;
+Lg1_h4 = jacobian(h(4),x)*g1;
+
+Lg2_h1 = jacobian(h(1),x)*g2;
+Lg2_h2 = jacobian(h(2),x)*g2;
+Lg2_h3 = jacobian(h(3),x)*g2;
+Lg2_h4 = jacobian(h(4),x)*g2;
+
+Lf_Lf_h1 = jacobian(Lf_h1,x)*f;
+Lf_Lf_h2 = jacobian(Lf_h2,x)*f;
+Lf_Lf_h3 = jacobian(Lf_h3,x)*f;
+Lf_Lf_h4 = jacobian(Lf_h4,x)*f;
+
+O = [O;
+     Lf_h1;Lf_h2;Lf_h3;Lf_h3;
+     Lg1_h1;Lg1_h2;Lg1_h3;Lg1_h4;
+     Lg2_h1;Lg2_h2;Lg2_h3;Lg2_h4;
+     Lf_Lf_h1;Lf_Lf_h2;Lf_Lf_h3;Lf_Lf_h4];
+ 
+dO = vpa(jacobian(O,x),2);
