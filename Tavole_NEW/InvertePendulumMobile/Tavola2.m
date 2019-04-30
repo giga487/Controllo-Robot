@@ -75,7 +75,7 @@ Delta = vpa([ad_fg1(:,1),ad_fg2(:,1),ad_fg1(:,2),ad_fg2(:,2),ad_fg1(:,3),ad_fg2(
 Delta2 = vpa(simplify([M1,M2]),2);
 
 dimDelta = rank(Delta2);
-disp ([ 'la dim. di Delta4 è:'  num2str(dimDelta)]);
+disp ([ 'la dim. di Delta4 è: '  num2str(dimDelta)]);
 
 %% Osservabilità
 
