@@ -104,7 +104,6 @@ O = [ad_fh1(:,1),ad_fh2(:,1),ad_fh3(:,1),ad_fh4(:,1)]
 
 O = [h(1);h(2);h(3);h(4)];
 
-
 Lf_h1 = jacobian(h(1),x)*f;
 Lf_h2 = jacobian(h(2),x)*f;
 Lf_h3 = jacobian(h(3),x)*f;
@@ -132,3 +131,6 @@ O = [O;
      Lf_Lf_h1;Lf_Lf_h2;Lf_Lf_h3;Lf_Lf_h4];
  
 dO = vpa(jacobian(O,x),2);
+
+dimDelta = rank(dO);
+disp ([ 'la dim. di dO è:'  num2str(dimDelta)]);
