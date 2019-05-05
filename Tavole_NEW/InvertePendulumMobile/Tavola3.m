@@ -59,7 +59,7 @@ f = vpa([x(6)*cos(x(3));
  
 y = [x(3);x(4)];
 
-f_tot = vpa(f + g1_hat*v1 + g2_hat*v2,2)
+f_tot = vpa(f + g1_hat*v1 + g2_hat*v2,2);
 
 %l'equilibrio lo pongo in [x,y,tetha,0,0,0,0]
 
@@ -99,27 +99,45 @@ f_now = vpa(f_fun(x1,x2,x3,x4,x5,x6,x7),2);
 
 
 y1 = y(1);
-dy1 = jacobian(y1(1),x)*f;
-L2f_h1 = jacobian(dy1,x)*f;
-Lg1_Lf_h1 = jacobian(dy1,x)*g1_hat*v1;
-Lg2_Lf_h1 = jacobian(dy1,x)*g2_hat*v2;
+Lf_h1 = jacobian(y1(1),x)*f;
+L2f_h1 = jacobian(Lf_h1,x)*f;
+Lg1_Lf_h1 = jacobian(Lf_h1,x)*g1_hat*v1;
+Lg2_Lf_h1 = jacobian(Lf_h1,x)*g2_hat*v2;
 ddy1 = vpa(L2f_h1 + Lg1_Lf_h1 + Lg2_Lf_h1,2);
 
 y2 = y(2);
-dy2 = jacobian(y2,x)*f;
-L2f_h2 = jacobian(dy2,x)*f;
-Lg1_Lf_h2 = jacobian(dy2,x)*g1_hat*v1;
-Lg2_Lf_h2 = jacobian(dy2,x)*g2_hat*v2;
+Lf_h2 = jacobian(y2,x)*f;
+L2f_h2 = jacobian(Lf_h2,x)*f;
+Lg1_Lf_h2 = jacobian(Lf_h2,x)*g1_hat*v1;
+Lg2_Lf_h2 = jacobian(Lf_h2,x)*g2_hat*v2;
 ddy2 = vpa(L2f_h2 + Lg1_Lf_h2 + Lg2_Lf_h2,2);
+%il grado relativo è 2 per entrambe le uscite.
+%partial feedback linearization
 
+Gamma = (vpa([L2f_h1;L2f_h2],2));
+E = [Lg1_Lf_h1,Lg2_Lf_h1;Lg1_Lf_h2,Lg2_Lf_h2];
 
+invE = inv(E);
 
+e(1,1) = y(1);
+e(2,1) = Lf_h1;
+e(3,1) = y(2);
+e(4,1) = Lf_h2;
+eta(1,1) = x1;
+eta(2,1) = x2;
+eta(3,1) = -x(5)*g16 + x(6)*g15;
 
+Tx = vpa([e;eta],2);
 
+PROVA = vpa([jacobian(Tx(1,1),x);
+         jacobian(Tx(2,1),x);
+         jacobian(Tx(3,1),x);
+         jacobian(Tx(4,1),x);
+         jacobian(Tx(5,1),x);
+         jacobian(Tx(6,1),x);
+         jacobian(Tx(7,1),x)],2)
 
-
-
-
+rank(PROVA)
 
 
 
