@@ -1,4 +1,0 @@
-
-
-% Inverted Pendulum 10
-

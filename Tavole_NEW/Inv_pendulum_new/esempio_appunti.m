@@ -29,11 +29,6 @@ rank(matrix)
 %devo controllare il rank della matrice g adfg [g,adfg] che deve essere
 %uguale al rank di span(f,g)
 
-psi = sym('psi',[3,1],'real');
-
-psi'*[g_x0,adf_0(:,2)]
-
-
 
 
 
