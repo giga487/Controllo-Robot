@@ -3,8 +3,11 @@ clc
 clear
 close all
 
+digits(3)
 %% spazio degli stati
 x = sym('x', [7 1], 'real');
+
+
 %x = x y  theta alpha d_alpha v d_theta  
 Mb = 35;
 Mw = 5;
@@ -81,11 +84,31 @@ rank_dO = rank(dO);
 string_Obs = sprintf('Il rango della matrice di observabilità è %i', rank_dO)
 
 %% Studio la controllabilità del sistema
-Delta0 = [g1_feedbackLaw,g2_feedbackLaw];
-
+syms adfg1_fun(x1,x2,x3,x4,x5,x6,x7) adfg2_fun(x1,x2,x3,x4,x5,x6,x7) real
+% Delta0 = vpa([g1_feedbackLaw,g2_feedbackLaw]);
+% 
+% rank(Delta0)
 %chow: if dimension of span delle 2 distribuzioni = n, alora il sistema è
 %small time locally accessibile.
 
+n = 7;
+
+% adfg1 = vpa(liebracket(f_feedbackLaw,g1_feedbackLaw,x,n-1));
+% adfg2 = vpa(liebracket(f_feedbackLaw,g2_feedbackLaw,x,n-1));
+adfg1 = vpa(liebracket(f,g1,x,n-1));
+adfg2 = vpa(liebracket(f,g2,x,n-1));
+rank([adfg1,adfg2])
+
+adfg1_fun(x1,x2,x3,x4,x5,x6,x7) = adfg1;
+adfg2_fun(x1,x2,x3,x4,x5,x6,x7) = adfg2;
+
+%% 
+ad1 = adfg1_fun(0,0,0,0,0,x6,0);
+ad2 = adfg2_fun(0,0,0,0,0,x6,0);
+Q = [ad1,ad2];
+rank(Q)
+
+%il rank della Q è 7 solo se la velocità è diversa da 0.
 
 
 
