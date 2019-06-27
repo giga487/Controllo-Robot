@@ -23,6 +23,8 @@ g = 9.81;
 z = sym('z', [7 1], 'real');
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
+
+
 %x = x y  theta alpha d_alpha v d_theta  
 % TUTTO IN z
 
@@ -55,6 +57,46 @@ y = [x(3); x(4)];
 h1 = y(1,1);
 h2 = y(2,1);
 
+%% 
+syms f_fun(x1,x2,x3,x4,x5,x6,x7)
+
+f_fun(x1,x2,x3,x4,x5,x6,x7) = f_hat;
+
+f_fun(0,0,0,0,0,0,0)
+
+%%
+rank([g1,g2,f_hat]) %l ipotesi ii non è confermata
+%%
+
+Lg1_h1 = jacobian(h1,x)*g1; % 0
+Lg2_h1 = jacobian(h1,x)*g2; % 0
+
+Lf1_h1 = jacobian(h1,x)*f;  % diverzo da zero
+
+Lg1_Lf1_h1 = jacobian(Lf1_h1,x)*g1; % 1
+Lg2_Lf1_h1 = jacobian(Lf1_h1,x)*g2; % 0
+%il grado relativo è 2  
+Lf2_h1 = jacobian(Lf1_h1,x)*f;
+
+% il grado relativo è 2.
+
+h = h2(1);
+
+Lg1_h2 = jacobian(h2,x)*g1; % 0
+Lg2_h2 = jacobian(h2,x)*g2; % 0
+
+Lf1_h2 = jacobian(h2,x)*f;  % diverzo da zero
+
+Lg1_Lf1_h2 = jacobian(Lf1_h2,x)*g1; % 1
+Lg2_Lf1_h2 = jacobian(Lf1_h2,x)*g2; % 0
+%il grado relativo è 2
+
+Lf2_h2 = jacobian(Lf1_h2,x)*f;
+
+Gamma = vpa([Lf2_h1;Lf2_h2]);
+E = vpa([Lg1_Lf1_h1,Lg2_Lf1_h1;
+     Lg1_Lf1_h2,Lg2_Lf1_h2]);
+
 %% Ricerca proprietà
 % affinch´e esistano un cambiamento di variabili \psi(x) e le funzioni di retroazione
 % statica ?(x) e ?(x) tali da linearizzare il sistema detto
@@ -79,7 +121,7 @@ rank(delta)
 
 % mentre la a?
 
-syms gg_f(x1,x2,x3,x4,x5,x6,x7) gg2_f(x1,x2,x3,x4,x5,x6,x7) ;
+syms gg_f(x1,x2,x3,x4,x5,x6,x7) gg2_f(x1,x2,x3,x4,x5,x6,x7) 
 gg_f(x1,x2,x3,x4,x5,x6,x7) = gg;
 adf6g1 = gg_f(0,0,0,0,0,x6,0);
 gg2_f(x1,x2,x3,x4,x5,x6,x7) = gg2;
@@ -88,8 +130,17 @@ adf6g2 = gg2_f(0,0,0,0,0,x6,0);
 gg_gg2 = [adf6g1,adf6g2];
 rank(gg_gg2)
 
+%% Check Trasformazione Linearmente indipendente
 
-
+coordinate_trans = [x(3);
+                    x(7);
+                    x(4);
+                    x(5);
+                    x(1);
+                    x(2);
+                    -x(5)*g16+x(6)*g15];
+                
+rank(jacobian(coordinate_trans,x))
 %% Space transformate
 
 x(3) = z(1);
