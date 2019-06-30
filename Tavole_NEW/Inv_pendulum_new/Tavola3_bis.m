@@ -44,9 +44,9 @@ f1 = [x(6)*cos(x(3));
          x(7);
          x(5)];
 
-% f2(1,1) = sin(2*x(4))*((x(7))^2)*H/D + (1/2)*(Mb*cz*R*x(5))^2*sin(2*x(4))/D+(1/2)*(-(Mb*R)^2 *cz-4*Iwa*Mb*cz-4*Mb*Mw*cz*R^2)*g*sin(x(4))/D;
-% f2(2,1) = Ka*(x(7))^2 + (1/2)*g*sin(2*x(4))/D*(Mb*cz*R)^2 + (1/4)*(-4*Iyy*Mb*R^2*cz-4*R^2*Mb^2*cz^3)*sin(2*x(4))*x(5)^2/D;
-% f2(3,1) = (-(Ixx-Izz)*R^2-Mb*cz^2*R^2)*sin(2*x(4))*x(5)*x(7)/G - sin(x(4))*R^2*Mb*cz*x(6)*x(7)/G;
+f2(1,1) = sin(2*x(4))*((x(7))^2)*H/D + (1/2)*(Mb*cz*R*x(5))^2*sin(2*x(4))/D+(1/2)*(-(Mb*R)^2 *cz-4*Iwa*Mb*cz-4*Mb*Mw*cz*R^2)*g*sin(x(4))/D;
+f2(2,1) = Ka*(x(7))^2 + (1/2)*g*sin(2*x(4))/D*(Mb*cz*R)^2 + (1/4)*(-4*Iyy*Mb*R^2*cz-4*R^2*Mb^2*cz^3)*sin(2*x(4))*x(5)^2/D;
+f2(3,1) = (-(Ixx-Izz)*R^2-Mb*cz^2*R^2)*sin(2*x(4))*x(5)*x(7)/G - sin(x(4))*R^2*Mb*cz*x(6)*x(7)/G;
 
 f = vpa([f1;f2]);
 y = [x(1);x(2);x(3)];
@@ -58,23 +58,43 @@ h3 = y(3,1);
 %% Calcolo il grado relativo
 clc
 
-Lf_1_h1 = jacobian(h1,x)*f;
-Lg1_1_h1 = jacobian(h1,x)*g1;
-Lg2_1_h1 = jacobian(h1,x)*g2;
-Lf_2_h1 = jacobian(Lf_1_h1,x)*f;
-Lg1_2_h1 = jacobian(Lf_1_h1,x)*g1
-Lg2_2_h1 = jacobian(Lf_1_h1,x)*g2
+Lf_h1 = jacobian(h1,x)*f;
+Lf_h2 = jacobian(h2,x)*f;
 
-Lf_1_h2 = jacobian(h2,x)*f;
-Lg1_1_h2 = jacobian(h2,x)*g1;
-Lg2_1_h2 = jacobian(h2,x)*g2;
-Lf_2_h2 = jacobian(Lf_1_h2,x)*f;
-Lg1_2_h2 = jacobian(Lf_1_h2,x)*g1
-Lg2_2_h2 = jacobian(Lf_1_h2,x)*g2
+Lf2_h1 = jacobian(Lf_h1,x)*f;
+Lf2_h2 = jacobian(Lf_h2,x)*f;
 
-Lf_1_h3 = jacobian(h3,x)*f;
-Lg1_1_h3 = jacobian(h3,x)*g1;
-Lg2_1_h3 = jacobian(h3,x)*g2;
-Lf_2_h3 = jacobian(Lf_1_h3,x)*f;
-Lg1_2_h3 = jacobian(Lf_1_h3,x)*g1
-Lg2_2_h3 = jacobian(Lf_1_h3,x)*g2
+Lf3_h1 = jacobian(Lf2_h1,x)*f
+Lf3_h2 = jacobian(Lf2_h2,x)*f
+
+Lg1_Lf2_h1 = jacobian(Lf2_h1,x)*g1
+Lg2_Lf2_h1 = jacobian(Lf2_h1,x)*g2
+
+Lg1_Lf2_h2 = jacobian(Lf2_h2,x)*g1
+Lg2_Lf2_h2 = jacobian(Lf2_h2,x)*g2
+
+E = vpa([Lg1_Lf2_h1,Lg2_Lf2_h1;
+         Lg1_Lf2_h2,Lg2_Lf2_h2])
+
+inv_E = vpa(inv(E));
+
+Gamma = vpa([Lf3_h1;
+         Lf3_h2])
+
+syms inv_E_fun(x1,x2,x3,x4,x5,x6,x7)
+
+inv_E_fun(x1,x2,x3,x4,x5,x6,x7) = inv_E;
+
+vpa(inv_E_fun(0,0,0,pi/180,0,5,.5));
+
+%%
+
+Psi = [h1;
+       Lf_h1;
+       Lf2_h1;
+       h2;
+       Lf_h2;
+       Lf2_h2]
+
+rank(jacobian(Psi,x))
+
