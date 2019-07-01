@@ -81,20 +81,81 @@ inv_E = vpa(inv(E));
 Gamma = vpa([Lf3_h1;
          Lf3_h2])
 
-syms inv_E_fun(x1,x2,x3,x4,x5,x6,x7)
+syms inv_E_fun(x1,x2,x3,x4,x5,x6,x7) jacobian_f(x1,x2,x3,x4,x5,x6,x7)
 
 inv_E_fun(x1,x2,x3,x4,x5,x6,x7) = inv_E;
 
-vpa(inv_E_fun(0,0,0,pi/180,0,5,.5));
+vpa(inv_E_fun(0,0,0,pi/180,0,5,.5))
 
 %%
+
+clc
+
+var = f(4);
+
+Lg1Psi = jacobian(var,x)*g1
+LgP2si = jacobian(var,x)*g2
 
 Psi = [h1;
        Lf_h1;
        Lf2_h1;
        h2;
        Lf_h2;
-       Lf2_h2]
+       Lf2_h2;
+       var];
 
+jacobian_f(x1,x2,x3,x4,x5,x6,x7) = jacobian(Psi,x);
+jacobian_f(0,0,0,0,0,0,0)
 rank(jacobian(Psi,x))
+
+%%
+clc
+
+Lfh1 = jacobian(h1,x)*f
+Lg1h1 = jacobian(h1,x)*g1
+Lg2h1 = jacobian(h1,x)*g2
+Lf2h1 = jacobian(Lfh1,x)*f
+Lg1Lfh1 = jacobian(Lfh1,x)*g1
+Lg2Lfh1 = jacobian(Lfh1,x)*g2
+
+Lfh2 = jacobian(h2,x)*f
+Lg1h2 = jacobian(h2,x)*g1
+Lg2h2 = jacobian(h2,x)*g2
+Lf2h2 = jacobian(Lfh2,x)*f
+Lg1Lfh2 = jacobian(Lfh2,x)*g1
+Lg2Lfh2 = jacobian(Lfh2,x)*g2
+
+Lf3h1 = jacobian(Lf2h1,x)*f
+Lf3h2 = jacobian(Lf2h2,x)*f
+Lg1Lf2h2 = jacobian(Lf2h2,x)*g1
+Lg1Lf2h2 = jacobian(Lf2h2,x)*g2
+
+E = [Lg1Lfh1,Lg2Lfh1;
+     Lg1Lfh2,Lg2Lfh2]
+
+%E non è invertibile, devo quindi fare un altro tipo di controllo.
+%% 
+Lfh1 = jacobian(h1,x)*f;
+Lf2h1 = jacobian(Lfh1,x)*f;
+
+Lfh2 = jacobian(h2,x)*f;
+Lf2h2 = jacobian(Lfh2,x)*f;
+
+Lg1Lf2h1 = jacobian(Lf2h1,x)*g1
+Lg2Lf2h1 = jacobian(Lf2h1,x)*g2
+Lg1Lf2h2 = jacobian(Lf2h2,x)*g1
+Lg2Lf2h2 = jacobian(Lf2h2,x)*g2
+
+E2 = [Lg1Lf2h1,Lg2Lf2h1;
+      Lg1Lf2h2,Lg2Lf2h2];
+  
+inv_E2 = inv(E2)
+
+syms inv_E2_f(x1,x2,x3,x4,x5,x6,x7) E2_f(x1,x2,x3,x4,x5,x6,x7)
+E2_f(x1,x2,x3,x4,x5,x6,x7) = E2;
+inv_E2_f(x1,x2,x3,x4,x5,x6,x7) = inv_E2;
+
+vpa(inv_E2_f(0,0,0,x4,0,0,x7))
+vpa(E2_f(0,0,0,x4,0,0,x7))
+
 

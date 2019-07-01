@@ -24,7 +24,6 @@ z = sym('z', [7 1], 'real');
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
 
-
 %x = x y  theta alpha d_alpha v d_theta  
 % TUTTO IN z
 
