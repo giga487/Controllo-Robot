@@ -1,3 +1,13 @@
+%% All'interno di questo file viene:
+%1) generata la dinamica del sistema con le matrici B C G
+%2) generata la cinematica diretta
+%3) generata la configurazione dei giunti che portano il robot in una
+%   configurazione dello spazio operativo desiderata attraverso
+%   l'inversione differenziale della cinematica
+%4) Plot della configurazione che deve avere il robot
+
+
+
 %% il problema viene visto attualmente come statico, non c'è ruota.
 
 param = [a1,a2,a3,a4,a5,a_head,0;
@@ -40,14 +50,17 @@ x6 = -90*pi/180;
 
 cond_init = [x1,x2,x3,x4,x5,x6]';
 
-plot_robot_fix(param,[x1,x2,x3,x4,x5,x6]',com_des,hand_des,head_des);
+plot_configurazione(param,[x1,x2,x3,x4,x5,x6]',com_des,hand_des,head_des);
 
 %% Utilizzo della cinematica inversa per trovare q_d
+% Task Secondari Mediante Proiezione nel Null Space
 
 qd = find_solution_joint(param,com_des,head_des,hand_des);
-% plot_robot_fix(param,qd,com_des,hand_des,head_des);
 
-[p,com,head_r] = Direct_Kinematics(param,qd);
+% plot_robot_fix(param,qd,com_des,hand_des,head_des);
+%% plotto la posizione
+
+plot_configurazione(param,qd(:,end),com_des,hand_des,head_des);
 
 %%
 q_position = 1.0e+03 *[1.5097;
