@@ -55,12 +55,12 @@ plot_configurazione(param,[x1,x2,x3,x4,x5,x6]',com_des,hand_des,head_des);
 %% Utilizzo della cinematica inversa per trovare q_d
 % Task Secondari Mediante Proiezione nel Null Space
 
-qd = find_solution_joint(param,com_des,head_des,hand_des);
+q_now = find_solution_joint(param,com_des,head_des,hand_des);
 
 % plot_robot_fix(param,qd,com_des,hand_des,head_des);
 %% plotto la posizione
 
-plot_configurazione(param,qd(:,end),com_des,hand_des,head_des);
+plot_configurazione(param,q_now(:,end),com_des,hand_des,head_des);
 
 %%
 q_position = 1.0e+03 *[1.5097;
