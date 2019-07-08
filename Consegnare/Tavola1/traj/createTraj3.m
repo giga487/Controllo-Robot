@@ -7,6 +7,7 @@ function [a3,a2,a1,a0] = createTraj3(theta0_m,thetaf_m,thetad0_m,thetadf_m,tstar
 	%
 	%
 	% By: Reza Ahmadzadeh - Matlab/Octave - 2013
+    
     for i = 1:1:size(theta0_m,1)
         
         theta0 = theta0_m(i);

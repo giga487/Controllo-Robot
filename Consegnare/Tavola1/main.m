@@ -29,17 +29,17 @@ calcJacobianAna
 x_com = 0;
 y_com = 1;
 z_com = 0;
-com_des = [x_com,y_com,z_com];
+com_des = [x_com,y_com,z_com]';
 
 x_head = 1;
 y_head = 1.866;
 z_head = 0;
-head_des = [x_head,y_head,z_head];
+head_des = [x_head,y_head,z_head]';
 
 x_hand = -1;
 y_hand = 1;
 z_hand = 0;
-hand_des = [x_hand,y_hand,z_hand];
+hand_des = [x_hand,y_hand,z_hand]';
 
 x1 = 30*pi/180;
 x2 = 120*pi/180;
@@ -78,16 +78,50 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 
 hand_des = p(6,:)';
 
-plot_robot_fix(param,q_position_2,com_d,hand_des,head_r_d);
-%% launch sim
-% Law_param = [0.1 0.1];
-% q_desiderata = q_position_2
-Law_param = [0.1 5];
-q_desiderata = q_position_2;
+plot_configurazione(param,q_position_2,com_d,hand_des,head_r_d);
 
-d_q_desiderata = zeros(6,1);
 %%
-sim('pid_handle_statico',9)
+
+t0 = 0;
+tf = 10;
+v_zero = zeros(size(q_position,1),1)
+
+[a3,a2,a1,a0] = createTraj3(cond_init(:),q_position_2(:),v_zero,v_zero,t0,tf);
+N_sample = 200;
+p = [a3,a2,a1,a0];
+% Create time vector
+t = linspace(t0,tf,N_sample);
+
+Ts = (tf-t0)/N_sample
+
+for i = 1:1:size(p,1)
+    % Evaluate the polynomial : Position
+    pos(i,:) = polyval(p(i,:),t);
+    % calculate the first derivative : Velocity
+    pd = polyder(p(i,:));
+    % Evaluate the velocity
+    vel(i,:) = polyval(pd,t);
+    % calculate the second derivative : Acceleration
+    pdd = polyder(pd);
+    % Evaluate the acceleration
+    acc(i,:) = polyval(pdd,t);
+    
+    str_e = sprintf('q%i',i);
+    
+    figure;
+    plot(t,pos(i,:),'--+r'); hold on
+    plot(t,vel(i,:),'--og'); 
+    plot(t,acc(i,:),'--xb'); 
+    title(str_e)
+    legend('q','dq','ddq');
+    grid
+    hold off;
+
+end
+% plot
+
+Law = [100,5]
+
 
 %% 
 

@@ -19,9 +19,10 @@ function q_out = find_solution_joint(param,com_des,head_des,hand_des)
     dq = zeros(6,1);
     
     Ts = 0.1;
-    K_com = 1;
-    K_head = 1;
-    K_hand = 5;
+    K_com = 10;
+    K_hand = 10;
+    K_head = 0;
+
 
     d_com = [];
     d_hand = [];
@@ -39,15 +40,18 @@ function q_out = find_solution_joint(param,com_des,head_des,hand_des)
     [p,com,head_r] = Direct_Kinematics(param,q0);
     q_out = q0;
     
+    min_now = zeros(6,1);
+    
     p_hand = (p(6,:))';
     i = 0;
+   
     % il ciclo continua finchè la distanza è maggiore di 0.2 m
-    while (norm(des_com-com) > 0.09 || norm(des_hand-p_hand) > 0.3 ||  norm(des_head-head_r) > 0.2) && i < 10000
+    while (norm(des_com-com) > 0.1 norm(des_hand-p_hand) > 0.5)% ||  norm(des_head-head_r) > 0.8) % && i < 10000
        
         e_com = des_com-com;
         e_hand = des_hand-p_hand;
         e_head = des_head-head_r;   
-                
+
         J_com = J_com_fun(q_out);
         pinv_J_com = pinv(J_com);
 
@@ -66,8 +70,13 @@ function q_out = find_solution_joint(param,com_des,head_des,hand_des)
         dq_hand = PJN_com*pinv_J_hand*K_hand*(e_hand);
         dq_head = projN_J_com_hand*pinv_J_head*K_head*(e_head);
         
+%         dq__com_gradiente = K_com*J_com'*e_com;
+%         dq_hand_gradiente
+        %d_qd = (pinv_J_c*erroc_com) + (I - pinv_J_c*J_c)*J2tilde_pinv*((pd_hand-hand)-J_ha*pinv_J_c*erroc_com);
+        
         q_out = [q_out, q_out(:,end) + Ts*(dq+dq_hand+dq_head)];  
         
+        %q_out = [q_out, q_out(:,end) + Ts*dq_gradiente];  
         i = i+1;
         
         [p,com,head_r] = Direct_Kinematics(param,q_out(:,end));
