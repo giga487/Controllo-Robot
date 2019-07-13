@@ -11,7 +11,7 @@
 %% il problema viene visto attualmente come statico, non c'è ruota.
 
 param = [a1,a2,a3,a4,a5,a_head,0;
-         m1,m2,m3,m4,m5,m_head,m_mot];
+         m1,m2,m3,m4m5,m_head,m_mot];
 
 param = param';
 
