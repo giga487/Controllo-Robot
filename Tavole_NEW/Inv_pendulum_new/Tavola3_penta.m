@@ -55,7 +55,7 @@ f2(2,1) = Ka*(x(7))^2 + (1/2)*g*sin(2*x(4))/D*(Mb*cz*R)^2 + (1/4)*(-4*Iyy*Mb*R^2
 f2(3,1) = (-(Ixx-Izz)*R^2-Mb*cz^2*R^2)*sin(2*x(4))*x(5)*x(7)/G - sin(x(4))*R^2*Mb*cz*x(6)*x(7)/G;
 
 f = vpa([f1;f2]);
-y = [x(1);x(1)];
+y = [x(1);x(2)];
 h1 = y(1,1);
 h2 = y(2,1);
 
@@ -79,6 +79,6 @@ Lg1Lfh2 = jacobian(Lfh2,x)*g1
 Lg2Lfh2 = jacobian(Lfh2,x)*g2
 
 E = [Lg1Lfh1,Lg2Lfh1;
-     Lg1Lfh2,Lg1Lfh2];
+     Lg1Lfh2,Lg1Lfh2]
  
 rank(E)
