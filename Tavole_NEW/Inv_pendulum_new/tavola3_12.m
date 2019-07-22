@@ -59,30 +59,31 @@ f_tilde = [f;0]+[g1;0]*x(8);
 g1_tilde = [zeros(7,1);1];
 g2_tilde = [g2;0];
 
-h1
-Lf_h1 = jacobian(h1,x)*f_tilde
-Lf_h2 = jacobian(h2,x)*f_tilde
-Lf2_h1 = jacobian(Lf_h1,x)*f_tilde
-Lf2_h2 = jacobian(Lf_h2,x)*f_tilde
-Lf3_h1 = jacobian(Lf2_h1,x)*f_tilde
-Lf3_h2 = jacobian(Lf2_h2,x)*f_tilde
+Lf_h1 = jacobian(h1,x)*f_tilde;
+Lf_h2 = jacobian(h2,x)*f_tilde;
+Lf2_h1 = jacobian(Lf_h1,x)*f_tilde;
+Lf2_h2 = jacobian(Lf_h2,x)*f_tilde;
+Lf3_h1 = jacobian(Lf2_h1,x)*f_tilde;
+Lf3_h2 = jacobian(Lf2_h2,x)*f_tilde;
 
-Lg1_h1 = jacobian(h1,x)*g1_tilde
-Lg2_h1 = jacobian(h1,x)*g2_tilde
-Lg1_h2 = jacobian(h2,x)*g1_tilde
-Lg2_h2 = jacobian(h2,x)*g2_tilde
-Lg1_Lf_h1 = jacobian(Lf_h1,x)*g1_tilde
-Lg2_Lf_h1 = jacobian(Lf_h1,x)*g2_tilde
-Lg1_Lf_h2 = jacobian(Lf_h2,x)*g1_tilde
-Lg2_Lf_h2 = jacobian(Lf_h2,x)*g2_tilde
-Lg1_Lf2_h1 = jacobian(Lf2_h1,x)*g1_tilde
-Lg2_Lf2_h1 = jacobian(Lf2_h1,x)*g2_tilde
-Lg1_Lf2_h2 = jacobian(Lf2_h2,x)*g1_tilde
-Lg2_Lf2_h2 = jacobian(Lf2_h2,x)*g2_tilde
+Lg1_h1 = jacobian(h1,x)*g1_tilde;
+Lg2_h1 = jacobian(h1,x)*g2_tilde;
+Lg1_h2 = jacobian(h2,x)*g1_tilde;
+Lg2_h2 = jacobian(h2,x)*g2_tilde;
+Lg1_Lf_h1 = jacobian(Lf_h1,x)*g1_tilde;
+Lg2_Lf_h1 = jacobian(Lf_h1,x)*g2_tilde;
+Lg1_Lf_h2 = jacobian(Lf_h2,x)*g1_tilde;
+Lg2_Lf_h2 = jacobian(Lf_h2,x)*g2_tilde;
+Lg1_Lf2_h1 = jacobian(Lf2_h1,x)*g1_tilde;
+Lg2_Lf2_h1 = jacobian(Lf2_h1,x)*g2_tilde;
+Lg1_Lf2_h2 = jacobian(Lf2_h2,x)*g1_tilde;
+Lg2_Lf2_h2 = jacobian(Lf2_h2,x)*g2_tilde;
 
 E = [Lg1_Lf2_h1,Lg2_Lf2_h1;
      Lg1_Lf2_h2,Lg2_Lf2_h2];
 
+Gamma = [Lf3_h1;
+         Lf3_h2];
 %% 
 syms E_fun(x1,x2,x3,x4,x5,x6,x7,x8)
 E_fun(x1,x2,x3,x4,x5,x6,x7,x8) = E;
@@ -90,13 +91,16 @@ E_00 = vpa(E_fun(0,0,0,0,0,x6,0,0));
 
 %% Zery Dynamic
 
-psi = [h1;Lf_h1;Lf2_h1;h2;Lf_h1;Lf2_h2]
-eta = [x3;x5] 
+psi = [h1;Lf_h1;Lf2_h1;h2;Lf_h1;Lf2_h2];
+eta = [x3;x5];
 
-d_psi = jacobian([psi],x);
+d_psi = jacobian([psi;eta],x);
 
 syms d_psi_fun(x1,x2,x3,x4,x5,x6,x7,x8)
 d_psi_fun(x1,x2,x3,x4,x5,x6,x7,x8) = d_psi;
 d_psi_00 = vpa(d_psi_fun(0,0,0,0,0,x6,0,0))
 
 rank(d_psi_00)
+    
+    
+        

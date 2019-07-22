@@ -11,7 +11,7 @@
 %% il problema viene visto attualmente come statico, non c'è ruota.
 
 param = [a1,a2,a3,a4,a5,a_head,0;
-         m1,m2,m3,m4m5,m_head,m_mot];
+         m1,m2,m3,m4,m5,m_head,m_mot];
 
 param = param';
 
@@ -78,16 +78,16 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 
 hand_des = p(6,:)';
 
-plot_configurazione(param,q_position_2,com_d,hand_des,head_r_d);
+plot_configurazione(param,q_position,com_d,hand_des,head_r_d);
 
 %%
 
 t0 = 0;
 tf = 10;
-v_zero = zeros(size(q_position,1),1)
+v_zero = zeros(size(q_position_2,1),1)
 
 [a3,a2,a1,a0] = createTraj3(cond_init(:),q_position_2(:),v_zero,v_zero,t0,tf);
-N_sample = 200;
+N_sample = 1000;
 p = [a3,a2,a1,a0];
 % Create time vector
 t = linspace(t0,tf,N_sample);
@@ -119,10 +119,37 @@ for i = 1:1:size(p,1)
 
 end
 % plot
+%% 
 
-Law = [100,5]
+Law = [10,4,4,4,4,4;
+       1,1,1,1,1,1]
 
+p1.time = t';
+p1.signals.values = pos(1,:)';
+p2.time = t';
+p2.signals.values = pos(2,:)';
+p3.time = t';
+p3.signals.values = pos(3,:)';
+p4.time = t';
+p4.signals.values = pos(4,:)';
+p5.time = t';
+p5.signals.values = pos(5,:)';
+p6.time = t';
+p6.signals.values = pos(6,:)';
 
+dp1.time = t';
+dp1.signals.values = vel(1,:)';
+dp2.time = t';
+dp2.signals.values = vel(2,:)';
+dp3.time = t';
+dp3.signals.values = vel(3,:)';
+dp4.time = t';
+dp4.signals.values = vel(4,:)';
+dp5.time = t';
+dp5.signals.values = vel(5,:)';
+dp6.time = t';
+dp6.signals.values = vel(6,:)';
+% plot(pos1.time,pos1.signals.values)
 %% 
 
 q_position_sim = q_sim.signals.values(:,:);
