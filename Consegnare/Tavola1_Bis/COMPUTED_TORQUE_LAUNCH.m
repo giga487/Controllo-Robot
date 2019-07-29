@@ -10,14 +10,12 @@ param = param';
 
 % Condizioni iniziali dei giunti del robot
 x1 = 30*pi/180;
-x2 = 120*pi/180;
+x2 = 140*pi/180;
 x3 = -60*pi/180;
 x4 = 90*pi/180;
 x5 = 90*pi/180;
 x6 = -90*pi/180;
 cond_init = [x1,x2,x3,x4,x5,x6]';
-
-%Script
 
 % Costruzione del punto desiderato da raggiungere.
 q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
@@ -32,14 +30,16 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 [p,com_d,head_r_d] = Direct_Kinematics(param,q_position_2);
 hand_des = p(6,:)';
 
+plot_configurazione(param,cond_init,com_d,hand_des,head_r_d);
+
 %% LAW PARAM
 Law_param = [10000,10000,10000,10000,10000,10000;
-             1000,1000,1000,1000,950,1000];
+             1000,1000,1000,1000,1000,1000];
          
 I = eye(6);
                   
-Kp = Law_param(1,:).*I
-Kd = Law_param(2,:).*I
+Kp = Law_param(1,:).*I;
+Kd = Law_param(2,:).*I;
 
 Legge = [Kp,Kd];
 q_desiderata = q_position_2;
