@@ -106,7 +106,7 @@ C_f(x1,x2,x3,x4,x5,x6,x7) = C;
 fFunc(x1,x2,x3,x4,x5,x6,x7) = f;
 
 f_zero = fFunc(0,0,0,0,0,0,0);
-DeltaL = C_f(0,0,0,0,0,x6,0);
+DeltaL = C_f(0,0,0,0,0,x6,0)
 
 Rank_Test_Controllabilita = rank(DeltaL);
 %E' CONTROLLABILE SE x6 è diverso da zero.

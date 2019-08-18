@@ -10,17 +10,17 @@ syms Mb R Mw Iwa cz Iyy g Ka Ixx Izz Iwd b
 syms G H D Ka
 digits(3);
 
-Mb = 35;
-Mw = 5;
-R = 0.25;
-cz = R;
-b = 0.2;
-Ixx = 2.10;
-Iyy = 1.82;
-Izz = 0.64;
-Iwa = 0.15;
-Iwd = 0.08;
-g = 9.81;
+% Mb = 35;
+% Mw = 5;
+% R = 0.25;
+% cz = R;
+% b = 0.2;
+% Ixx = 2.10;
+% Iyy = 1.82;
+% Izz = 0.64;
+% Iwa = 0.15;
+% Iwd = 0.08;
+% g = 9.81;
 
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
@@ -138,7 +138,7 @@ B_min = B(1:2,1);
 RankCO = rank(ctrb(A_min,B_min));
 
 poles = [-2,-5];
-K1 = place(A_min,B_min,poles)
+K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3:4,3:4);
 B_min2 = B(3:4,2);
@@ -146,7 +146,7 @@ B_min2 = B(3:4,2);
 RankCO = rank(ctrb(A_min2,B_min));
 
 poles = [-5,-6];
-K2 = place(A_min2,B_min2,poles)
+K2 = place(A_min2,B_min2,poles);
 
 %%
 K_N = ([K1,0,0;0,0,K2]);
@@ -154,3 +154,7 @@ G_N = ss(A(1:4,1:4) - B(1:4,:)*K_N,B(1:4,:),C(:,1:4),D);
 
 pole(G_N)
 
+%%
+syms v1 v2
+
+simplify(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
