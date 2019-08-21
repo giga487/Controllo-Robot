@@ -7,49 +7,59 @@ function plot_robot_fix(param,q_out,com_d,hand_d,head_d,time,string_text)
     x_R = 2;
     y_L = 0;
     y_U = 4;
-
-    [r c] = size(q_out(:,:));
+    
+    time_now = 0;
+    
+    [~,c] = size(q_out(:,:));
     
     for i = 1:1:c-1
-        subplot(2,1,1);
+        
         clf;
         axis([x_L x_R y_L y_U]);
         hold on;
         [p,com,head_r] = Direct_Kinematics(param,q_out(:,i));
-        plot(p(1:6,1),p(1:6,2),'o-');
-        
-        for ii = 1:size(p,1)
-             text(p(ii,1),p(ii,2)," "+str(ii),'Color','r')
-        end
-        
+
         e_com_norm = norm(com_d-com);
         e_hand_norm = norm(p(6,:)'- hand_d);
         e_head_norm = norm(head_r-head_d);
+     
+        dt = time(i+1) - time_now;
         
-        text(x_R-1,y_U-1,"t: "+string(time(i)),'Color','r')
-        plot([p(3,1) head_r(1,1)],[p(3,2) head_r(2,1)],'k');
-        viscircles([head_r(1,1),head_r(2,1)],0.3);
-        viscircles([com(1),com(2)],0.01);    
-        viscircles([hand_d(1),hand_d(2)],0.1,'Color','b');
-        text(hand_d(1),hand_d(2)," "+str(9),'Color','r')
-        viscircles([com_d(1),com_d(2)],0.1,'Color','b');
-        text(com_d(1),com_d(2)," "+str(7),'Color','r')
-        viscircles([head_d(1),head_d(2)],0.1,'Color','b');
-        text(head_d(1),head_d(2)," "+str(8),'Color','r')
-        title(sprintf("%s",string_text));
-%         pause(time(i+1)-time(i));
-        str_e = sprintf('e_{com} %f',e_com_norm)
-        text(x_L,y_L+3," "+str_e,'Color','r')
-        str_e = sprintf('e_{hand} %f',e_hand_norm)
-        text(x_L,y_L+2.8," "+str_e,'Color','r')
-        str_e = sprintf('e_{head} %f',e_head_norm)
-        text(x_L,y_L+2.6," "+str_e,'Color','r')
-        hold off;
-        pause(0.0008);
+        if(dt > 0.01)   
+            
+            plot(p(1:6,1),p(1:6,2),'o-');
+        
+            for ii = 1:size(p,1)
+                 text(p(ii,1),p(ii,2)," "+str(ii),'Color','r')
+            end
+        
+            text(x_R-1,y_U-1,"t: "+string(time(i)),'Color','r')
+            plot([p(3,1) head_r(1,1)],[p(3,2) head_r(2,1)],'k');
+            viscircles([head_r(1,1),head_r(2,1)],0.3);
+            viscircles([com(1),com(2)],0.01);    
+            viscircles([hand_d(1),hand_d(2)],0.1,'Color','b');
+            text(hand_d(1),hand_d(2)," "+str(9),'Color','r')
+            viscircles([com_d(1),com_d(2)],0.1,'Color','b');
+            text(com_d(1),com_d(2)," "+str(7),'Color','r')
+            viscircles([head_d(1),head_d(2)],0.1,'Color','b');
+            text(head_d(1),head_d(2)," "+str(8),'Color','r')
+            title(sprintf("%s",string_text));
+
+            str_e = sprintf('e_{com} %f',e_com_norm);
+            text(x_L,y_L+3," "+str_e,'Color','r');
+            str_e = sprintf('e_{hand} %f',e_hand_norm);
+            text(x_L,y_L+2.8," "+str_e,'Color','r');
+            str_e = sprintf('e_{head} %f',e_head_norm);
+            text(x_L,y_L+2.6," "+str_e,'Color','r');
+            time_now = time(i);
+            pause(0.001);
+            hold off;
+        end
+
 
     end
 
-    hold off;
+
     
     
 end

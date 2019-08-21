@@ -20,3 +20,8 @@ a3 = 1;
 a4 = 1;
 a5 = 1;
 a_head = 1;
+
+param = [a1,a2,a3,a4,a5,a_head,0;
+         m1,m2,m3,m4,m5,m_head,m_mot];
+
+param = param';

@@ -78,6 +78,7 @@ dq_traj.signals.dimensions = 6;
 ddq_traj.time = t;
 ddq_traj.signals.values = ddq';
 ddq_traj.signals.dimensions = 6;
+
 %% SIMULAZIONE
 
 sim('controlloCoppia_handle_statico',tfinal)
