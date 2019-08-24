@@ -58,16 +58,22 @@ ddq_traj.signals.dimensions = 6;
 
 %% LAW PARAM
 
-K_lambda = 50;
-K_d = 5;
-K_r = 2;
+kp = 100; 
+kd = 15;
+kr = 15;
 
-pi_vec = [8;1];
-Law_param = [K_lambda, K_d, K_r];
+pi_0 = 1;
+
+Law_param = [kp,kp,kp,kp,kp,kp;
+             kd,kd,kd,kd,kd,kd;
+             kr,kr,kr,kr,kr,kr];
+
+% pi_vec = parameter(1:6,2);
+% Law_param = [K_lambda, K_d, K_r];
 
 %% SIMULAZIONE
 % 
-sim('backstepping_handle_statico_Adaptative2',tfinal)
+sim('BS_Adaptive',tfinal)
 
 %% 
 close all

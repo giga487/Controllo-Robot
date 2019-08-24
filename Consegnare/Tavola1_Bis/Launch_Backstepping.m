@@ -38,7 +38,7 @@ t = linspace(tstart,tfinal,100);
 
 [q,dq,ddq] = generatore_traiettorie(p,t);
 
-plot_trajectory(t,q,dq,ddq);
+% plot_trajectory(t,q,dq,ddq);
 
 q_traj.time = t;
 q_traj.signals.values = q';
@@ -54,18 +54,11 @@ ddq_traj.signals.dimensions = 6;
 
 %% LAW PARAM
 kp = 50; 
-kd = 5;
+kd = 2;
 
 Law_param = [kp,kp,kp,kp,kp,kp;
              kd,kd,kd,kd,kd,kd];
          
-I = eye(6);
-                  
-Kp = Law_param(1,:).*I;
-Kd = Law_param(2,:).*I;
-
-Legge = [Kp,Kd];
-
 % SIMULAZIONE
 
 sim('backstepping_handle_statico_last',tfinal)

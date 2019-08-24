@@ -1,4 +1,7 @@
 %%Determine the letteral Jacobian
+clc
+clear
+addpath('Utils')
 
 syms a1 a2 a3 a5 a4 a_head x1 x2 x3 x4 x5 x_head ...
     l_head kr Ixx_b Iyy_b Izz_b...
@@ -22,10 +25,7 @@ kr = 1;
 q = [x1 x2 x3 x4 x5 x_head];
 dq = [dx1 dx2 dx3 dx4 dx5 dx_head];
 
-h = 0.1;
-L = 1;
-
-g0 = 9.81;
+syms h L g0 real
 
 Ixx_b = m_b1*(h^2)/12;
 Iyy_b = m_b1*(L^2)/12;
@@ -274,7 +274,7 @@ BJoint = (m_b1*(JpG1')*JpG1 + (JoG1')*rG1*I_braccio*(rG1')*JoG1+...
         m_b6*(JpGHead')*JpGHead + (JoGHead')*rGHead*I_braccio*(rGHead')*JoGHead);
  
 
-B = simplify(BJoint);
+B = (BJoint);
 
 diary ('B.txt');
 B % your symbolic variable
