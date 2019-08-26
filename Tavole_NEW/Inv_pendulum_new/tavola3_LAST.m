@@ -10,17 +10,19 @@ syms Mb R Mw Iwa cz Iyy g Ka Ixx Izz Iwd b
 syms G H D Ka
 digits(3);
 
-% Mb = 35;
-% Mw = 5;
-% R = 0.25;
-% cz = R;
-% b = 0.2;
-% Ixx = 2.10;
-% Iyy = 1.82;
-% Izz = 0.64;
-% Iwa = 0.15;
-% Iwd = 0.08;
-% g = 9.81;
+Mb = 35;
+Mw = 5;
+R = 0.25;
+cz = R;
+b = 0.2;
+Ixx = 2.10;
+Iyy = 1.82;
+Izz = 0.64;
+Iwa = 0.15;
+Iwd = 0.08;
+g = 9.81;
+
+cond_iniziali = [0,0,-pi,30*pi/180,0,5,0];
 
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
@@ -35,7 +37,7 @@ D = (Mb*cos(x(4))*cz*R)^2+((-Mb^2-2*Mw*Mb)*cz^2-2*Iyy*Mw-Iyy*Mb)*R^2-2*Mb*cz^2*I
 G = (-Mb*cz^2+Izz-Ixx)*(R*cos(x(4)))^2+(Mb*cz^2+Ixx+2*Iwd+2*b^2*Mw)*R^2+2*b^2*Iwa;
 
 g15 = (Mb*(R^2) + 2*Mw*(R^2) + 2*Iwa + Mb*cos(x(4))*cz*R)/D;
-g16 = -R*(Mb*cos(x(4))*cz*R + Iyy + Mb*cz^2)/D;
+g16 = -R*(Mb*cos(x (4))*cz*R + Iyy + Mb*cz^2)/D;
 g17 = R*b/G;
 
 g25 = (Mb*(R^2) + 2*Mw*(R^2) + 2*Iwa + Mb*cos(x(4))*cz*R)/D;
@@ -100,14 +102,14 @@ Psi = [h1;
        h2;
        Lf_h2];
 
-Eta = [-x1;
-       -x2;
-       -x6];
+Eta = [x1;
+       x2;
+       -x5*g1_b(6)+x6*g1_b(5)];
 
 transf = [Psi;Eta];
 
 d_Psi = jacobian(transf,x);
-rank_d_Psi = rank(d_Psi)
+rank_d_Psi = rank(d_Psi);
 d_Psi_fun(x1,x2,x3,x4,x5,x6,x7) = d_Psi;
 
 d_Psi_00 = d_Psi_fun(0,0,0,0,0,0,0)
@@ -145,7 +147,7 @@ B_min2 = B(3:4,2);
 
 RankCO = rank(ctrb(A_min2,B_min));
 
-poles = [-5,-6];
+poles = [-10,-60];
 K2 = place(A_min2,B_min2,poles);
 
 %%

@@ -87,5 +87,6 @@ q_error_sim = error_sim_BS_ada.signals.values(:,:);
 % plot_robot_fix(param,q_position_sim',com_d,hand_des,head_r_d,time,string_title);
 plot_error(q_error_sim,time); %error in degree
 
-
+param_true = m5;
+plot_paramVSesteem(param_true,param_esteem,time); %error in degree
 

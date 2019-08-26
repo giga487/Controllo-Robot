@@ -100,18 +100,19 @@ Psi = [h1;
        h2;
        Lf_h2];
 
-Eta = [-x1;
-       -x2;
-       -x6];
+Eta = [x1;
+       x2;
+       x6];
 
+ 
 transf = [Psi;Eta];
 
 d_Psi = jacobian(transf,x);
-rank_d_Psi = rank(d_Psi)
+rank_d_Psi = rank(d_Psi);
 d_Psi_fun(x1,x2,x3,x4,x5,x6,x7) = d_Psi;
 
-d_Psi_00 = d_Psi_fun(0,0,0,0,0,0,0)
-Rank_dPsi = rank(d_Psi_00)
+d_Psi_00 = d_Psi_fun(0,0,0,0,0,0,0);
+Rank_dPsi = rank(d_Psi_00);
 
 %% State Linearized
 
@@ -137,7 +138,7 @@ B_min = B(1:2,1);
 
 RankCO = rank(ctrb(A_min,B_min));
 
-poles = [-2,-5];
+poles = [-5,-8];
 K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3:4,3:4);
@@ -157,7 +158,7 @@ pole(G_N)
 %%
 syms v1 v2
 
-simplify(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
+vpa(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
 
 %% Prove sistema
 

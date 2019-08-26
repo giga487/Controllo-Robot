@@ -64,11 +64,11 @@ h1 = y(1,1);
 h2 = y(2,1);
 
 Lf_h1 = jacobian(h1,x)*f;
-Lg1_h1 = jacobian(h1,x)*g1_b
-Lg2_h1 = jacobian(h1,x)*g2_b
+Lg1_h1 = jacobian(h1,x)*g1_b;
+Lg2_h1 = jacobian(h1,x)*g2_b;
 Lf_h2 = jacobian(h2,x)*f;
-Lg1_h2 = jacobian(h2,x)*g1_b
-Lg2_h2 = jacobian(h2,x)*g2_b
+Lg1_h2 = jacobian(h2,x)*g1_b;
+Lg2_h2 = jacobian(h2,x)*g2_b;
 
 Lf2_h1 = jacobian(Lf_h1,x)*f;
 Lg1_Lf_h1 = jacobian(Lf_h1,x)*g1_b;
@@ -105,7 +105,7 @@ transf = [Psi;
           Eta];
 
 d_Psi = jacobian(transf,x);
-rank_d_Psi = rank(d_Psi)
+rank_d_Psi = rank(d_Psi);
 d_Psi_fun(x1,x2,x3,x4,x5,x6,x7) = d_Psi;
 
 d_Psi_00 = d_Psi_fun(0,0,0,0,0,0,0)
@@ -134,7 +134,7 @@ B_min = B(1:2,1);
 
 RankCO = rank(ctrb(A_min,B_min));
 
-poles = [-10,-15];
+poles = [-10,-8];
 K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3,4);
