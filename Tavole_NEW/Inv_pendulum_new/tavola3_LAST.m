@@ -139,7 +139,7 @@ B_min = B(1:2,1);
 
 RankCO = rank(ctrb(A_min,B_min));
 
-poles = [-2,-5];
+poles = [-5,-10];
 K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3:4,3:4);
@@ -147,7 +147,7 @@ B_min2 = B(3:4,2);
 
 RankCO = rank(ctrb(A_min2,B_min));
 
-poles = [-10,-60];
+poles = [-8,-10];
 K2 = place(A_min2,B_min2,poles);
 
 %%

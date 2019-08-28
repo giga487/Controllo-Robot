@@ -146,6 +146,6 @@ poles = -6;
 K2 = place(A_min2,B_min2,poles);
 
 %%
-% syms v1 v2
-% simplify(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
+syms v1 v2
+simplify(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
 
