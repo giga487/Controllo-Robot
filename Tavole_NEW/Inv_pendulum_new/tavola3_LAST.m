@@ -22,8 +22,6 @@ Iwa = 0.15;
 Iwd = 0.08;
 g = 9.81;
 
-cond_iniziali = [0,0,-pi,30*pi/180,0,5,0];
-
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
 f2 = sym('f2', [3,1], 'real');
@@ -139,7 +137,7 @@ B_min = B(1:2,1);
 
 RankCO = rank(ctrb(A_min,B_min));
 
-poles = [-5,-10];
+poles = [-5,-100];
 K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3:4,3:4);
@@ -147,9 +145,10 @@ B_min2 = B(3:4,2);
 
 RankCO = rank(ctrb(A_min2,B_min));
 
-poles = [-8,-10];
+poles = [-5,-100];
 K2 = place(A_min2,B_min2,poles);
 
+cond_iniziali = [0,0,0,10*pi/180,0,5,0];
 %%
 K_N = ([K1,0,0;0,0,K2]);
 G_N = ss(A(1:4,1:4) - B(1:4,:)*K_N,B(1:4,:),C(:,1:4),D);
