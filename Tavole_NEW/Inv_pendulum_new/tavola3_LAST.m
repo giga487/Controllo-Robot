@@ -22,8 +22,6 @@ Iwa = 0.15;
 Iwd = 0.08;
 g = 9.81;
 
-cond_iniziali = [0,0,-pi,30*pi/180,0,5,0];
-
 v = sym('v', [2 1], 'real');
 x = sym('x', [7 1], 'real');
 f2 = sym('f2', [3,1], 'real');
@@ -139,7 +137,8 @@ B_min = B(1:2,1);
 
 RankCO = rank(ctrb(A_min,B_min));
 
-poles = [-2,-3];
+poles = [-5,-100];
+
 K1 = place(A_min,B_min,poles);
 
 A_min2 = A(3:4,3:4);
@@ -147,9 +146,11 @@ B_min2 = B(3:4,2);
 
 RankCO = rank(ctrb(A_min2,B_min));
 
-poles = [-25,-20];
+poles = [-5,-100];
+
 K2 = place(A_min2,B_min2,poles);
 
+cond_iniziali = [0,0,0,10*pi/180,0,5,0];
 %%
 K_N = ([K1,0,0;0,0,K2]);
 G_N = ss(A(1:4,1:4) - B(1:4,:)*K_N,B(1:4,:),C(:,1:4),D);
@@ -160,3 +161,87 @@ pole(G_N)
 syms v1 v2
 
 simplify(f+[g1_b,g2_b]*(-inv(E)*(G+[v1;v2])))
+
+
+%%
+sim('Tavola3_Lyapunov_FEEDBL_2',50)
+
+
+%% PLOT SPEED
+clc
+
+y = speed_x.signals.values(:,:);
+x = speed_x.time;
+ref = v_ref.signals.values(:,:);
+
+figure;
+plot(x,y,'k',x,ref,'r');
+xlabel('time [s]');
+ylabel('longitudinal speed [m/s]');
+grid on;
+title('Speed_x VS Speed ref');
+legend('Speed','Speed ref');
+
+figure;
+plot(x,y-ref,'k');
+xlabel('time [s]');
+ylabel('error speed_x [m/s]');
+grid on;
+title('Error speed');
+
+%% PLOT ALPHA
+
+y = alpha.signals.values(:,:);
+x = alpha.time;
+ref = alpha_ref.signals.values(:,:);
+
+figure;
+plot(x,y,'k',x,ref,'r');
+xlabel('time [s]');
+ylabel('alpha [deg]');
+grid on;
+title('Alpha VS Alpha ref');
+legend('Alpha','Alpha ref');
+
+figure;
+plot(x,y-ref,'k');
+xlabel('time [s]');
+ylabel('error alpha [deg]');
+grid on;
+title('Error alpha');
+
+
+%% PLOT TETHA
+y = tetha.signals.values(:,:);
+x = tetha.time;
+ref = tetha_ref.signals.values(:,:);
+
+figure;
+xlabel('time [s]');
+ylabel('Tetha [deg]');
+plot(x,y,'k',x,ref,'r');
+grid on;
+title('Tetha VS Tetha ref');
+legend('Tetha','Tetha ref');
+
+figure;
+plot(x,y-ref,'k');
+xlabel('time [s]');
+ylabel('error tetha [deg]');
+grid on;
+title('Error tetha');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

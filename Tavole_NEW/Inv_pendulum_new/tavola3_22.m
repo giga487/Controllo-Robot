@@ -110,7 +110,7 @@ d_Psi = jacobian(transf,x);
 rank_d_Psi = rank(d_Psi)
 d_Psi_fun(x1,x2,x3,x4,x5,x6,x7) = d_Psi;
 
-d_Psi_00 = d_Psi_fun(0,0,0,0,0,0,0)
+d_Psi_00 = d_Psi_fun(0,0,0,0,0,x6,0)
 Rank_dPsi = rank(d_Psi_00)
 
 %% State Linearized

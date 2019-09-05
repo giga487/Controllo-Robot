@@ -22,7 +22,7 @@ hand_des = p(6,:)';
 plot_configurazione(parameter,cond_init,com_d,hand_des,head_r_d);
 % plot_configurazione(param,q_position_2,com_d,hand_des,head_r_d);
 q_desiderata = q_position_2;
-
+plot_configurazione(parameter,q_desiderata,com_d,hand_des,head_r_d);
 %% TRAJECTORY
 thetad0 = zeros(size(q_desiderata,1));
 thetadf = zeros(size(q_desiderata,1));

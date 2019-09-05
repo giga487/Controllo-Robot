@@ -8,6 +8,8 @@ function plot_error(error,time)
     plot(time(:),error(:,1));
     plot(time(:),zeros(size(error,1)),'k');
     hold off;
+    ylabel('\epsilon [deg]')
+    xlabel('time [s]');
     title('Error 1');
     subplot(6,1,2);
     plot(time(:),error(:,2));

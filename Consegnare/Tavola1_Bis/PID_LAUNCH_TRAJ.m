@@ -64,9 +64,8 @@ t = linspace(tstart,tfinal,100);
 
 [q,dq,ddq] = generatore_traiettorie(p,t);
 
-plot_trajectory(t,q,dq,ddq);
+% plot_trajectory(t,q,dq,ddq);
 
-%%
 q_traj.time = t;
 q_traj.signals.values = q';
 q_traj.signals.dimensions = 6;

@@ -1,5 +1,5 @@
 
-function plot_error_spaceTask(error,time)
+function plot_error_BS(error,time)
 
     figure;
     hold on;

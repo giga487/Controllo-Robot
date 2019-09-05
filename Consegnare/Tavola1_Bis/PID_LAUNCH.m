@@ -22,7 +22,7 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 [p,com_d,head_r_d] = Direct_Kinematics(param,q_position_2);
 hand_des = p(6,:)';
 
-Law_param = [0.5 5];
+Law_param = [1 5];
 q_desiderata = q_position_2;
 
 T = 100;

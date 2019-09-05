@@ -6,7 +6,7 @@ function plot_robot_fix(param,q_out,time,string_text)
     x_L = -3;
     x_R = 3;
     y_L = 0;
-    y_U = 6;
+    y_U = 4;
     x_traj = [];
     y_traj = [];
     x_com_traj = [];

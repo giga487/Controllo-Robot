@@ -29,7 +29,11 @@ q_position_2 = [x1+pi/3*0.5,x2-pi/3,x3+pi/3*0.5,x4+pi/3*0.5,pi/3,x6]';
 [p,com_d,head_r_d] = Direct_Kinematics(param,q_position_2);
 hand_des = p(6,:)';
 
-plot_configurazione(param,cond_init,com_d,hand_des,head_r_d);
+% plot_configurazione(param,cond_init,com_d,hand_des,head_r_d);
+% plot_configurazione(param,q_position_2,com_d,hand_des,head_r_d);
+
+q_position_3 = [x1+pi/3*0.5,90*pi/180,-pi/6,2*pi/6,pi/3,0]';
+plot_configurazione(param,q_position_3,com_d,hand_des,head_r_d);
 
 %% LAW PARAM
 Law_param = [10000,10000,10000,10000,10000,10000;

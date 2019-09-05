@@ -117,8 +117,8 @@ Rank_Test_Controllabilita = rank(DeltaL);
 %%
 % 1 NO
 % 2 NO
-% 3 NO si con x6 diverso da zero
-% 4 NO non cambia niente rispetto alle 3
+% 3 NO, si con x6 diverso da zero
+% 4 NO, non cambia niente rispetto alle 3
 % 5 NO 
 % 6 NO
 
